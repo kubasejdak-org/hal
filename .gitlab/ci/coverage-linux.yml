@@ -17,10 +17,11 @@
     # Build application.
     - ../tools/build/${Script}.sh -DCOVERAGE=ON
     - make
-    - bin/osal-tests [unit]${Tags}
+    - bin/${App} [unit]
     - make coverage
 
 Hardware_Coverage:
   extends: .Linux_Coverage
   variables:
     Script: "hardware-linux-gcc-9-debug"
+    App: "hardware"
