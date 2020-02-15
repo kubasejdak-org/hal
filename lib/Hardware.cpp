@@ -67,7 +67,7 @@ std::error_code Hardware::attach()
             return error;
     }
 
-    m_state = State::eDetached;
+    m_state = State::eAttached;
     return Error::eOk;
 }
 
