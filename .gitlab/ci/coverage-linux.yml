@@ -20,7 +20,7 @@
     - bin/osal-tests [unit]${Tags}
     - make coverage
 
-Timeout_Coverage:
+Hardware_Coverage:
   extends: .Linux_Coverage
   variables:
     Script: "hardware-linux-gcc-9-debug"
