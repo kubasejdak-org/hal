@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Define application settings.
+if (NOT DEFINED APP)
+    message(FATAL_ERROR "'APP' is not defined!")
+endif ()
+
 include(test/${APP}/${APP}.cmake)
 
 include(cmake/conan.cmake)
