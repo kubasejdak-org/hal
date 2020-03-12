@@ -40,6 +40,8 @@
 
 namespace hal::gpio {
 
+/// @enum Pin
+/// Represents possible bits from the GPIO ports.
 enum class Pin {
     eBit0,
     eBit1,
@@ -107,6 +109,9 @@ enum class Pin {
     eBit63
 };
 
+/// Converts enum representing GPIO pin id to its numeric representation.
+/// @param pin          Pin id to be converted.
+/// @return Numeric representation of the GPIO pin id.
 constexpr int toInt(Pin pin)
 {
     return static_cast<int>(pin);
