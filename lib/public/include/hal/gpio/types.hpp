@@ -110,17 +110,22 @@ enum class Pin {
 };
 
 /// Converts enum representing GPIO pin id to its numeric representation.
-/// @param pin          Pin id to be converted.
+/// @param pin              Pin id to be converted.
 /// @return Numeric representation of the GPIO pin id.
 constexpr int toInt(Pin pin)
 {
     return static_cast<int>(pin);
 }
 
+/// Helper flag for checking if a given type can be used as WidthType type in the GPIO middleware.
+/// @tparam WidthType       Unsigned type representing bitness of the given port (e.g. std::uint32_t is 32bit).
 template <typename WidthType>
 constexpr inline bool cIsValidWidthType
     = (std::is_unsigned_v<WidthType> && !std::is_same_v<WidthType, bool> && sizeof(WidthType) <= 8);
 
+/// Returns maximal bit id that can be represented by the given width type.
+/// @tparam WidthType       Unsigned type representing bitness of the given port (e.g. std::uint32_t is 32bit).
+/// @return Maximal bit id that can be represented by the given width type.
 template <typename WidthType>
 constexpr Pin maxPin()
 {
@@ -133,6 +138,9 @@ constexpr Pin maxPin()
     }
 }
 
+/// @typedef PinMask
+/// Helper type representing bit mask with the specified width.
+/// @tparam WidthType       Unsigned type representing bitness of the given port (e.g. std::uint32_t is 32bit).
 template <typename WidthType>
 using PinMask = std::bitset<toInt(maxPin<WidthType>())>;
 
