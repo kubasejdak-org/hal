@@ -44,6 +44,14 @@ GpioSet1_Linux_ARM_Clang_Tidy:
     Toolchain: "arm-linux-gnueabihf-clang-9"
     App: "gpio-set1"
 
+GpioSet2_Linux_ARM_Clang_Tidy:
+  extends: .Clang_Tidy
+  image: kubasejdak/arm-linux-gnueabihf-clang:latest
+  variables:
+    Platform: "linux-arm"
+    Toolchain: "arm-linux-gnueabihf-clang-9"
+    App: "gpio-set2"
+
 Middleware_Linux_Clang_Tidy:
   extends: .Clang_Tidy
   image: kubasejdak/clang:latest
