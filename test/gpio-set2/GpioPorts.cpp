@@ -39,7 +39,7 @@
 
 #include <cstdint>
 
-TEST_CASE("Toggle values of single pins", "[unit][gpio]")
+TEST_CASE("Set all combinations of bit patterns on 4bit ports", "[unit][gpio]")
 {
     hal::Hardware::init();
     hal::Hardware::attach();
