@@ -58,7 +58,7 @@ GpioSet1_Linux_ARM_Clang_Release_Build:
   extends: .Build_Test_Linux_ARM_Clang
   variables:
     App: "gpio-set1"
-      BuildType: "Release"
+    BuildType: "Release"
 
 GpioSet1_Linux_ARM_GCC_Debug_Build:
   extends: .Build_Test_Linux_ARM_GCC
