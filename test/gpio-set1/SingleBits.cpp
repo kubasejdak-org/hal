@@ -30,14 +30,90 @@
 ///
 /////////////////////////////////////////////////////////////////////////////////////
 
+#include <hal/Error.hpp>
 #include <hal/Hardware.hpp>
+#include <hal/factory.hpp>
+#include <hal/gpio/IPinInput.hpp>
+#include <hal/gpio/IPinOutput.hpp>
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("Sunny day init", "[unit][gpio]")
+TEST_CASE("Toggle values of single pins", "[unit][gpio]")
 {
     hal::Hardware::init();
     hal::Hardware::attach();
+
+    std::vector<std::shared_ptr<hal::gpio::IPinOutput>> outputs;
+    std::vector<std::shared_ptr<hal::gpio::IPinInput>> inputs;
+
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin0));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin1));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin2));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin3));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin4));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin5));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin6));
+    outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(hal::device_id::GpioSet1Id::ePortAPin7));
+
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin0));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin1));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin2));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin3));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin4));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin5));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin6));
+    inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(hal::device_id::GpioSet1Id::ePortBPin7));
+
+    SECTION("Multiple toggling")
+    {
+        bool setValue = true;
+        constexpr int cTestIterations = 100;
+        for (int i = 0; i < cTestIterations; ++i) {
+            for (auto& output : outputs) {
+                auto result = output->set(setValue);
+                REQUIRE(result == hal::Error::eOk);
+            }
+
+            for (auto& input : inputs) {
+                bool getValue{};
+                auto result = input->get(getValue);
+                REQUIRE(result == hal::Error::eOk);
+                REQUIRE(getValue == setValue);
+            }
+
+            setValue = !setValue;
+        }
+    }
+
+    SECTION("Set first and last bit outputs to low, check all")
+    {
+        // Set all outputs to high.
+        for (auto& output : outputs) {
+            auto result = output->on();
+            REQUIRE(result == hal::Error::eOk);
+        }
+
+        // Verify initial setup.
+        for (auto& input : inputs) {
+            bool getValue{};
+            auto result = input->get(getValue);
+            REQUIRE(result == hal::Error::eOk);
+            REQUIRE(getValue);
+        }
+
+        // Set first and last bit outputs to low.
+        outputs.front()->off();
+        outputs.back()->off();
+
+        // Verify test setup.
+        for (std::size_t i = 0; i < inputs.size(); ++i) {
+            bool getValue{};
+            auto result = inputs[i]->get(getValue);
+            REQUIRE(result == hal::Error::eOk);
+            bool shouldBeLow = (i == 3 || i == 4);
+            REQUIRE(getValue == !shouldBeLow);
+        }
+    }
 
     hal::Hardware::detach();
 }
