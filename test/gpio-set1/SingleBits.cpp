@@ -115,6 +115,26 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         }
     }
 
+    SECTION("Toggle only one pin at a time")
+    {
+        for (std::size_t i = 0; i < outputs.size(); ++i) {
+            for (std::size_t j = 0; j < outputs.size(); ++j) {
+                bool value = (i == j);
+                auto result = outputs[j]->set(value);
+                REQUIRE(result == hal::Error::eOk);
+            }
+
+            for (std::size_t j = 0; j < outputs.size(); ++j) {
+                bool getValue{};
+                auto result = inputs[j]->get(getValue);
+                REQUIRE(result == hal::Error::eOk);
+
+                bool expectedValue = (i == j);
+                REQUIRE(expectedValue == getValue);
+            }
+        }
+    }
+
     for (auto& output : outputs)
         hal::returnDevice(output);
 
