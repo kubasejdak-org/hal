@@ -63,6 +63,8 @@ static std::uint32_t portAPinSet0Modifier(std::uint8_t value, std::uint32_t /*un
     returnBits[5] = valueBits[1];  // NOLINT
     returnBits[6] = valueBits[2];  // NOLINT
     returnBits[13] = valueBits[3]; // NOLINT
+
+    return returnBits.to_ulong();
 }
 
 /// Converts client data to the physical pin configuration of the pin set 1.
@@ -77,6 +79,8 @@ static std::uint32_t portAPinSet1Modifier(std::uint8_t value, std::uint32_t /*un
     returnBits[22] = valueBits[1]; // NOLINT
     returnBits[26] = valueBits[2]; // NOLINT
     returnBits[27] = valueBits[3]; // NOLINT
+
+    return returnBits.to_ulong();
 }
 
 /// Converts physical data of the pin set 0 to the client's value.
@@ -87,10 +91,12 @@ static std::uint8_t portBPinSet0Modifier(std::uint32_t value, std::uint32_t /*un
     std::bitset<sizeof(std::uint32_t) * CHAR_BIT> valueBits(value);
     std::bitset<sizeof(std::uint8_t) * CHAR_BIT> returnBits(0);
 
-    returnBits[0] = valueBits[18];  // NOLINT
-    returnBits[1] = valueBits[12];  // NOLINT
-    returnBits[2] = valueBits[16];  // NOLINT
+    returnBits[0] = valueBits[18]; // NOLINT
+    returnBits[1] = valueBits[12]; // NOLINT
+    returnBits[2] = valueBits[16]; // NOLINT
     returnBits[3] = valueBits[20]; // NOLINT
+
+    return returnBits.to_ulong();
 }
 
 /// Converts physical data of the pin set 1 to the client's value.
@@ -105,6 +111,8 @@ static std::uint8_t portBPinSet1Modifier(std::uint8_t value, std::uint32_t /*unu
     returnBits[1] = valueBits[25]; // NOLINT
     returnBits[2] = valueBits[21]; // NOLINT
     returnBits[3] = valueBits[24]; // NOLINT
+
+    return returnBits.to_ulong();
 }
 
 template <>
