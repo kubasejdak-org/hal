@@ -29,6 +29,17 @@ GpioSet1_Linux_ARM_UT:
     AppArtifact: "GpioSet1_Linux_ARM_GCC_Debug_Build"
     App: "gpio-set1"
 
+GpioSet2_Linux_ARM_UT:
+  extends: .Run_Test_Linux_ARM
+  tags:
+    - raspberrypi
+    - gpio
+  dependencies:
+    - GpioSet2_Linux_ARM_GCC_Debug_Build
+  variables:
+    AppArtifact: "GpioSet2_Linux_ARM_GCC_Debug_Build"
+    App: "gpio-set2"
+
 Middleware_Linux_ARM_UT:
   extends: .Run_Test_Linux_ARM
   dependencies:

@@ -72,7 +72,9 @@ public:
         , m_port(port)
         , m_mask(mask)
         , m_modifier(modifier)
-    {}
+    {
+        m_port->setDirection(~WidthType{0}, m_mask);
+    }
 
     /// @see IPortInput::read
     std::error_code read(WidthType& value) override

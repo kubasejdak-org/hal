@@ -60,6 +60,7 @@ Coverage_Total:
     - shared
   dependencies:
     - GpioSet1_Coverage
+    - GpioSet2_Coverage
     - Middleware_Coverage
   artifacts:
     name: "${CI_JOB_NAME}_${CI_JOB_ID}"
@@ -72,5 +73,6 @@ Coverage_Total:
 
     - |
       lcov -a ../GpioSet1_Coverage/coverage/coverage.info \
+           -a ../GpioSet2_Coverage/coverage/coverage.info \
            -a ../Middleware_Coverage/coverage/coverage.info \
            -o coverage.info

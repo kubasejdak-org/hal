@@ -70,9 +70,11 @@ public:
                SharingPolicy sharingPolicy = SharingPolicy::eSingle)
         : IPortOutput<WidthType>(sharingPolicy)
         , m_port(port)
-        , m_mask(~mask)
+        , m_mask(mask)
         , m_modifier(modifier)
-    {}
+    {
+        m_port->setDirection(WidthType{0}, m_mask);
+    }
 
     /// @see IPortOutput::write
     std::error_code write(WidthType value) override

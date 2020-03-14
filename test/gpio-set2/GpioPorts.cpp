@@ -44,22 +44,42 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
     hal::Hardware::init();
     hal::Hardware::attach();
 
-    std::vector<std::shared_ptr<hal::gpio::IPortOutput<std::uint8_t>>> outputs;
-    std::vector<std::shared_ptr<hal::gpio::IPortInput<std::uint8_t>>> inputs;
-
     // clang-format off
-    outputs.emplace_back(hal::getDevice<hal::gpio::IPortOutput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortAPinSet0));
-    outputs.emplace_back(hal::getDevice<hal::gpio::IPortOutput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortAPinSet1));
+    auto outputSet0 = hal::getDevice<hal::gpio::IPortOutput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortAPinSet0);
+    auto outputSet1 = hal::getDevice<hal::gpio::IPortOutput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortAPinSet1);
 
-    inputs.emplace_back(hal::getDevice<hal::gpio::IPortInput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortBPinSet0));
-    inputs.emplace_back(hal::getDevice<hal::gpio::IPortInput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortBPinSet1));
+    auto inputSet0 = hal::getDevice<hal::gpio::IPortInput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortBPinSet0);
+    auto inputSet1 = hal::getDevice<hal::gpio::IPortInput<std::uint8_t>>(hal::device_id::GpioSet2Id::ePortBPinSet1);
     // clang-format on
 
-    for (auto& output : outputs)
-        hal::returnDevice(output);
+    constexpr std::uint8_t cPatternsCount = 15;
+    constexpr std::uint8_t cPatternMask = 0x0f;
+    for (std::uint8_t pattern = 0; pattern < cPatternsCount; ++pattern)
+    {
+        // Set pattern.
+        auto error = outputSet0->write(pattern);
+        REQUIRE(!error);
 
-    for (auto& input : inputs)
-        hal::returnDevice(input);
+        error = outputSet1->write(~pattern);
+        REQUIRE(!error);
+
+        // Verify pattern.
+        std::uint8_t getValue{};
+        error = inputSet0->read(getValue);
+        REQUIRE(!error);
+        auto expectedValue = pattern & cPatternMask;
+        REQUIRE(getValue == expectedValue);
+
+        error = inputSet1->read(getValue);
+        REQUIRE(!error);
+        expectedValue = ~pattern & cPatternMask;
+        REQUIRE(getValue == expectedValue);
+    }
+
+    hal::returnDevice(outputSet0);
+    hal::returnDevice(outputSet1);
+    hal::returnDevice(inputSet0);
+    hal::returnDevice(inputSet1);
 
     hal::Hardware::detach();
 }
