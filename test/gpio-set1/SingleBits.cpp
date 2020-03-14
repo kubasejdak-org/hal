@@ -30,7 +30,6 @@
 ///
 /////////////////////////////////////////////////////////////////////////////////////
 
-#include <hal/Error.hpp>
 #include <hal/Hardware.hpp>
 #include <hal/factory.hpp>
 #include <hal/gpio/IPinInput.hpp>
@@ -70,14 +69,14 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         constexpr int cTestIterations = 100;
         for (int i = 0; i < cTestIterations; ++i) {
             for (auto& output : outputs) {
-                auto result = output->set(setValue);
-                REQUIRE(result == hal::Error::eOk);
+                auto error = output->set(setValue);
+                REQUIRE(!error);
             }
 
             for (auto& input : inputs) {
                 bool getValue{};
-                auto result = input->get(getValue);
-                REQUIRE(result == hal::Error::eOk);
+                auto error = input->get(getValue);
+                REQUIRE(!error);
                 REQUIRE(getValue == setValue);
             }
 
@@ -89,15 +88,15 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
     {
         // Set all outputs to high.
         for (auto& output : outputs) {
-            auto result = output->on();
-            REQUIRE(result == hal::Error::eOk);
+            auto error = output->on();
+            REQUIRE(!error);
         }
 
         // Verify initial setup.
         for (auto& input : inputs) {
             bool getValue{};
-            auto result = input->get(getValue);
-            REQUIRE(result == hal::Error::eOk);
+            auto error = input->get(getValue);
+            REQUIRE(!error);
             REQUIRE(getValue);
         }
 
@@ -108,8 +107,8 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         // Verify test setup.
         for (std::size_t i = 0; i < inputs.size(); ++i) {
             bool getValue{};
-            auto result = inputs[i]->get(getValue);
-            REQUIRE(result == hal::Error::eOk);
+            auto error = inputs[i]->get(getValue);
+            REQUIRE(!error);
             bool shouldBeLow = (i == 0 || i == (inputs.size() - 1));
             REQUIRE(getValue == !shouldBeLow);
         }
@@ -120,14 +119,14 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         for (std::size_t i = 0; i < outputs.size(); ++i) {
             for (std::size_t j = 0; j < outputs.size(); ++j) {
                 bool value = (i == j);
-                auto result = outputs[j]->set(value);
-                REQUIRE(result == hal::Error::eOk);
+                auto error = outputs[j]->set(value);
+                REQUIRE(!error);
             }
 
             for (std::size_t j = 0; j < outputs.size(); ++j) {
                 bool getValue{};
-                auto result = inputs[j]->get(getValue);
-                REQUIRE(result == hal::Error::eOk);
+                auto error = inputs[j]->get(getValue);
+                REQUIRE(!error);
 
                 bool expectedValue = (i == j);
                 REQUIRE(expectedValue == getValue);
