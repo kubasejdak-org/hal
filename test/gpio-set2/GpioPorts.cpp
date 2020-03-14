@@ -72,7 +72,7 @@ TEST_CASE("Set all combinations of bit patterns on 4bit ports", "[unit][gpio]")
 
         error = inputSet1->read(getValue);
         REQUIRE(!error);
-        expectedValue = ~pattern & cPatternMask;
+        expectedValue = std::uint8_t(~pattern) & cPatternMask;
         REQUIRE(getValue == expectedValue);
     }
 
