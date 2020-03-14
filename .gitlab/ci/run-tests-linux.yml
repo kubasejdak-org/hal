@@ -22,6 +22,8 @@
 
 GpioSet1_Linux_ARM_UT:
   extends: .Run_Test_Linux_ARM
+  tags:
+    - gpio
   dependencies:
     - GpioSet1_Linux_ARM_GCC_Debug_Build
   variables:

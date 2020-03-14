@@ -110,10 +110,16 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
             bool getValue{};
             auto result = inputs[i]->get(getValue);
             REQUIRE(result == hal::Error::eOk);
-            bool shouldBeLow = (i == 3 || i == 4);
+            bool shouldBeLow = (i == 0 || i == (inputs.size() - 1));
             REQUIRE(getValue == !shouldBeLow);
         }
     }
+
+    for (auto& output : outputs)
+        hal::returnDevice(output);
+
+    for (auto& input : inputs)
+        hal::returnDevice(input);
 
     hal::Hardware::detach();
 }
