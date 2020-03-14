@@ -102,7 +102,7 @@ static std::uint8_t portBPinSet0Modifier(std::uint32_t value, std::uint32_t /*un
 /// Converts physical data of the pin set 1 to the client's value.
 /// @param value        Physical data read from theGPIO port.
 /// @return Client's value of the pin set 1 data.
-static std::uint8_t portBPinSet1Modifier(std::uint8_t value, std::uint32_t /*unused*/)
+static std::uint8_t portBPinSet1Modifier(std::uint32_t value, std::uint32_t /*unused*/)
 {
     std::bitset<sizeof(std::uint32_t) * CHAR_BIT> valueBits(value);
     std::bitset<sizeof(std::uint8_t) * CHAR_BIT> returnBits(0);
