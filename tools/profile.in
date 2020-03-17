@@ -2,7 +2,7 @@
 os=@CONAN_OS@
 os_build=@CONAN_HOST_OS@
 arch=@CONAN_ARCH@
-arch_build=@CMAKE_HOST_SYSTEM_PROCESSOR@
+arch_build=@CONAN_HOST_ARCH@
 compiler=@CONAN_COMPILER@
 compiler.version=@CONAN_COMPILER_MAJOR@
 compiler.libcxx=libstdc++11

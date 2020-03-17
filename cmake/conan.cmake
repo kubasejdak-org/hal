@@ -28,6 +28,13 @@ function(conan_init)
         endif ()
     endif ()
 
+    # Value for settings.arch_build.
+    if (CMAKE_CROSSCOMPILING)
+        set(CONAN_HOST_ARCH     x86_64)
+    else ()
+        set(CONAN_HOST_ARCH     ${CONAN_ARCH})
+    endif ()
+
     # Value for settings.compiler.
     if (CMAKE_CXX_COMPILER_ID STREQUAL GNU)
         set(CONAN_COMPILER      gcc)
