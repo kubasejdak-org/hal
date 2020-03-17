@@ -2,7 +2,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/conan-wrapper.cmake)
 
 function(conan_init)
     # Value for settings.os.
-    if (PLATFORM STREQUAL linux)
+    if (PLATFORM STREQUAL linux AND CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
+        set(CONAN_OS            Linux)
+    elseif (PLATFORM STREQUAL linux AND CMAKE_HOST_SYSTEM_NAME STREQUAL Darwin)
         set(CONAN_OS            Macos)
     elseif (PLATFORM STREQUAL linux-arm)
         set(CONAN_OS            Linux)
