@@ -30,30 +30,26 @@ CheckOptions:
     value:             'I'
   - key:               readability-identifier-naming.ClassCase
     value:             'CamelCase'
-  - key:             readability-identifier-naming.ClassConstantCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.ClassConstantPrefix
-    value:           'm_c'
-  - key:             readability-identifier-naming.ClassMemberCase
-    value:           'camelBack'
-  - key:             readability-identifier-naming.ClassMemberPrefix
-    value:           'm_'
-  - key:             readability-identifier-naming.ConstantCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.ConstantPrefix
-    value:           'c'
-  - key:             readability-identifier-naming.ConstantMemberCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.ConstantMemberPrefix
-    value:           'm_c'
-  - key:             readability-identifier-naming.ConstantParameterCase
-    value:           'camelBack'
-  - key:             readability-identifier-naming.ConstantParameterPrefix
-    value:           ''
-  - key:             readability-identifier-naming.ConstantPointerParameterCase
-    value:           'camelBack'
-  - key:             readability-identifier-naming.ConstantPointerParameterPrefix
-    value:           ''
+  - key:               readability-identifier-naming.ClassConstantCase
+    value:             'CamelCase'
+  - key:               readability-identifier-naming.ClassConstantPrefix
+    value:             'm_c'
+  - key:               readability-identifier-naming.ClassMemberCase
+    value:             'camelBack'
+  - key:               readability-identifier-naming.ClassMemberPrefix
+    value:             'm_'
+  - key:               readability-identifier-naming.ConstantCase
+    value:             'CamelCase'
+  - key:               readability-identifier-naming.ConstantPrefix
+    value:             'c'
+  - key:               readability-identifier-naming.ConstantMemberCase
+    value:             'CamelCase'
+  - key:               readability-identifier-naming.ConstantMemberPrefix
+    value:             'm_c'
+  - key:               readability-identifier-naming.ConstantParameterCase
+    value:             'CamelBack'
+  - key:               readability-identifier-naming.ConstantParameterPrefix
+    value:             'c'
   - key:               readability-identifier-naming.EnumCase
     value:             'CamelCase'
   - key:               readability-identifier-naming.EnumConstantCase
@@ -62,18 +58,6 @@ CheckOptions:
     value:             'e'
   - key:               readability-identifier-naming.FunctionCase
     value:             'camelBack'
-  - key:             readability-identifier-naming.GlobalConstantPointerCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.GlobalConstantPointerPrefix
-    value:           'c'
-  - key:             readability-identifier-naming.LocalConstantCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.LocalConstantPrefix
-    value:           'c'
-  - key:             readability-identifier-naming.LocalConstantPointerCase
-    value:           'CamelCase'
-  - key:             readability-identifier-naming.LocalConstantPointerPrefix
-    value:           'c'
   - key:               readability-identifier-naming.NamespaceCase
     value:             'lower_case'
   - key:               readability-identifier-naming.ParameterCase
