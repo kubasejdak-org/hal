@@ -71,7 +71,11 @@ private:
         for (const auto& [id, device] : m_devices) {
             if (device->ownersCount() != 0)
                 return Error::eDeviceTaken;
+
         }
+
+        if (auto error = deinitImpl())
+            return error;
 
         m_devices.clear();
         return Error::eOk;
@@ -89,6 +93,7 @@ private:
     std::error_code returnDeviceImpl(std::shared_ptr<Device>& /*unused*/) override { return Error::eOk; }
 
     std::error_code initImpl();
+    std::error_code deinitImpl() { return Error::eOk; }
 
 private:
     std::map<IdType, std::shared_ptr<Device>> m_devices;
