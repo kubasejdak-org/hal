@@ -36,11 +36,14 @@
 
 TEST_CASE("Sunny day init", "[unit][middleware]")
 {
-    auto result = hal::Hardware::init();
-    REQUIRE(!result);
-    result = hal::Hardware::attach();
-    REQUIRE(!result);
+    auto error = hal::Hardware::init();
+    REQUIRE(!error);
+    error = hal::Hardware::attach();
+    REQUIRE(!error);
 
-    result = hal::Hardware::detach();
-    REQUIRE(!result);
+    error = hal::Hardware::detach();
+    REQUIRE(!error);
+
+    error = hal::Hardware::destroy();
+    REQUIRE(!error);
 }

@@ -82,4 +82,5 @@ TEST_CASE("Set all combinations of bit patterns on 4bit ports", "[unit][gpio]")
     hal::returnDevice(inputSet1);
 
     hal::Hardware::detach();
+    hal::Hardware::destroy();
 }

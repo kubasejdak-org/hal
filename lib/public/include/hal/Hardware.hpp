@@ -44,6 +44,7 @@ public:
     static std::error_code init();
     static std::error_code attach();
     static std::error_code detach();
+    static std::error_code destroy();
 
 private:
     Hardware() = default;

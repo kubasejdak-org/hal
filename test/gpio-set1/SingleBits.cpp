@@ -141,4 +141,5 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         hal::returnDevice(input);
 
     hal::Hardware::detach();
+    hal::Hardware::destroy();
 }

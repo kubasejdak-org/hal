@@ -87,4 +87,20 @@ std::error_code Hardware::detach()
     return Error::eOk;
 }
 
+std::error_code Hardware::destroy()
+{
+    if (m_state != State::eDetached)
+        return Error::eWrongState;
+
+    auto removableRange = m_boards.equal_range(Type::eBase);
+    for (auto i = removableRange.first; i != removableRange.second; ++i) {
+        auto& board = i->second;
+        if (auto error = board.deinit())
+            return error;
+    }
+
+    m_state = State::eUninitialized;
+    return Error::eOk;
+}
+
 } // namespace hal
