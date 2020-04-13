@@ -59,4 +59,37 @@ private:
     static inline std::multimap<Type, IBoard&> m_boards;
 };
 
+class ScopedHardware {
+public:
+    ScopedHardware()
+    {
+        if (!Hardware::init())
+            return;
+
+        if (!Hardware::attach()) {
+            Hardware::destroy();
+            return;
+        }
+
+        m_initialized = true;
+    }
+
+    ScopedHardware(const ScopedHardware&) = delete;
+    ScopedHardware(ScopedHardware&&) noexcept = delete;
+
+    ~ScopedHardware()
+    {
+        Hardware::detach();
+        Hardware::destroy();
+    }
+
+    ScopedHardware& operator=(const ScopedHardware&) = delete;
+    ScopedHardware& operator=(ScopedHardware&&) noexcept = delete;
+
+    [[nodiscard]] bool initialized() const { return m_initialized; }
+
+private:
+    bool m_initialized{};
+};
+
 } // namespace hal

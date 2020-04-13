@@ -71,14 +71,10 @@ private:
         for (const auto& [id, device] : m_devices) {
             if (device->ownersCount() != 0)
                 return Error::eDeviceTaken;
-
         }
 
-        if (auto error = deinitImpl())
-            return error;
-
         m_devices.clear();
-        return Error::eOk;
+        return deinitImpl();
     }
 
     std::shared_ptr<Device> getDeviceImpl(int id) override
