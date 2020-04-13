@@ -63,10 +63,10 @@ class ScopedHardware {
 public:
     ScopedHardware()
     {
-        if (!Hardware::init())
+        if (Hardware::init())
             return;
 
-        if (!Hardware::attach()) {
+        if (Hardware::attach()) {
             Hardware::destroy();
             return;
         }
