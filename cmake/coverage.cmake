@@ -25,8 +25,10 @@ function(add_lcov_coverage)
 
     set(COVERAGE_FLAGS              --coverage)
     set(COVERAGE_OUTPUT_PATH        ${PROJECT_BINARY_DIR}/coverage)
-    set(COVERAGE_IGNORE             /usr/* */.conan/* /Library/Developer/CommandLineTools/* */_deps/*)
-    list(APPEND COVERAGE_IGNORE ${COVERAGE_OPT_IGNORE})
+    set(COVERAGE_IGNORE             '/usr/*' '*/.conan/*' '/Library/Developer/CommandLineTools/*' '*/_deps/*')
+    foreach (IGNORE_PATH IN LISTS COVERAGE_OPT_IGNORE)
+        list(APPEND COVERAGE_IGNORE '${IGNORE_PATH}')
+    endforeach ()
 
     add_compile_options(${COVERAGE_FLAGS})
     set(CMAKE_C_LINK_FLAGS          "${CMAKE_C_LINK_FLAGS} ${COVERAGE_FLAGS}" CACHE INTERNAL "")
