@@ -14,7 +14,7 @@ include(cmake/osal.cmake)
 include(cmake/platform.cmake)
 include(cmake/utils.cmake)
 
-project(hal VERSION 1.0 LANGUAGES ASM C CXX)
+project(hal VERSION 1.0.0 LANGUAGES ASM C CXX)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -29,7 +29,7 @@ add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
 if (COVERAGE)
     # Generate coverage report.
-    add_lcov_coverage(${CMAKE_CURRENT_SOURCE_DIR}/test/*)
+    add_lcov_coverage(IGNORE ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
 endif ()
 
 add_subdirectory(${platform_SOURCE_DIR}/app ${platform_BINARY_DIR})
