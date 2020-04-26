@@ -22,8 +22,6 @@ endif ()
 
 conan_init()
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 # Project-wide compilation options.
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
@@ -35,6 +33,9 @@ endif ()
 add_subdirectory(${platform_SOURCE_DIR}/app ${platform_BINARY_DIR})
 add_subdirectory(${osal_SOURCE_DIR}/lib ${osal_BINARY_DIR})
 add_subdirectory(${utils_SOURCE_DIR}/lib ${utils_BINARY_DIR})
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_subdirectory(lib)
 add_subdirectory(test)
 
