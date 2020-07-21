@@ -5,6 +5,7 @@ stages:
   - build-GCC
   - build-Clang
   - test
+  - valgrind
   - coverage
   - quality
   - deploy
