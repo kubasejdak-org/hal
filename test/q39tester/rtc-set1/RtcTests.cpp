@@ -70,16 +70,16 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
         tmSet.tm_yday = 0;   // NOLINT
     }
 
-    SECTION("1.3. 20:20:00 08.08.1990")
+    SECTION("1.3. 20:20:00 08.08.2008")
     {
         tmSet.tm_hour = 20;  // NOLINT
         tmSet.tm_min = 20;   // NOLINT
         tmSet.tm_sec = 00;   // NOLINT
         tmSet.tm_mday = 8;   // NOLINT
         tmSet.tm_mon = 7;    // NOLINT
-        tmSet.tm_year = 90;  // NOLINT
-        tmSet.tm_wday = 3;   // NOLINT
-        tmSet.tm_yday = 219; // NOLINT
+        tmSet.tm_year = 108; // NOLINT
+        tmSet.tm_wday = 5;   // NOLINT
+        tmSet.tm_yday = 220; // NOLINT
     }
 
     auto error = rtc->setTime(tmSet);
