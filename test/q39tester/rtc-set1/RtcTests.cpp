@@ -37,10 +37,28 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("1. Basic RTC operations", "[unit][rtc]")
+#include <ctime>
+
+TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
 {
     hal::ScopedHardware hardware;
 
     auto rtc = hal::getDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
+
+    std::tm tmSet{};
+
+    auto error = rtc->setTime(tmSet);
+    REQUIRE(!error);
+
+    std::tm tmGet{};
+    error = rtc->getTime(tmGet);
+    REQUIRE(!error);
+
+    auto timeSet = std::mktime(&tmSet);
+    auto timeGet = std::mktime(&tmGet);
+    constexpr int cAllowedDiffSec = 3;
+    REQUIRE(timeGet >= timeSet);
+    REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
+
     hal::returnDevice(rtc);
 }
