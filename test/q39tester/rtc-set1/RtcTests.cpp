@@ -46,6 +46,14 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
     auto rtc = hal::getDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
 
     std::tm tmSet{};
+    tmSet.tm_hour = 13;  // NOLINT
+    tmSet.tm_min = 46;   // NOLINT
+    tmSet.tm_sec = 5;    // NOLINT
+    tmSet.tm_mday = 26;  // NOLINT
+    tmSet.tm_mon = 11;   // NOLINT
+    tmSet.tm_year = 120; // NOLINT
+    tmSet.tm_wday = 6;   // NOLINT
+    tmSet.tm_yday = 360; // NOLINT
 
     auto error = rtc->setTime(tmSet);
     REQUIRE(!error);
