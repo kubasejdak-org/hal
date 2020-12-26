@@ -66,8 +66,6 @@ static bool isValidTime(std::tm& tm)
     tm.tm_yday = toConvert.tm_yday;
     tm.tm_isdst = toConvert.tm_isdst;
 
-    RtcLogger::error("tm = {}", tm);
-
     RtcLogger::error("tm.tm_hour = {}", tm.tm_hour);
     RtcLogger::error("tm.tm_min = {}", tm.tm_min);
     RtcLogger::error("tm.tm_sec = {}", tm.tm_sec);
