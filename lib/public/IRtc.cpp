@@ -62,9 +62,9 @@ static bool isValidTime(std::tm& tm)
         return false;
     }
 
-    tm.tm_wday = toConvert.tm_wday;
-    tm.tm_yday = toConvert.tm_yday;
-    tm.tm_isdst = toConvert.tm_isdst;
+    tm.tm_wday = converted.tm_wday;
+    tm.tm_yday = converted.tm_yday;
+    tm.tm_isdst = converted.tm_isdst;
 
     auto isSame = [](const std::tm& a, const std::tm& b) {
         if (a.tm_hour != b.tm_hour)
