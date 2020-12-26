@@ -85,6 +85,9 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
     auto error = rtc->setTime(tmSet);
     REQUIRE(!error);
 
+    bool initialized = rtc->isInitialized();
+    REQUIRE(initialized);
+
     std::tm tmGet{};
     error = rtc->getTime(tmGet);
     REQUIRE(!error);
