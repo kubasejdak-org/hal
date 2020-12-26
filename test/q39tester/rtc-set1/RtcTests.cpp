@@ -229,7 +229,7 @@ TEST_CASE("4. Set & get RTC with std::time_t", "[unit][rtc]")
         tmSet.tm_min = 59;   // NOLINT
         tmSet.tm_sec = 59;   // NOLINT
         tmSet.tm_mday = 31;  // NOLINT
-        tmSet.tm_mon = 11;    // NOLINT
+        tmSet.tm_mon = 11;   // NOLINT
         tmSet.tm_year = 120; // NOLINT
     }
 
