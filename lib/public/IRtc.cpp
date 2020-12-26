@@ -66,31 +66,30 @@ static bool isValidTime(std::tm& tm)
     tm.tm_yday = toConvert.tm_yday;
     tm.tm_isdst = toConvert.tm_isdst;
 
-    RtcLogger::error("tm.tm_hour = {}", tm.tm_hour);
-    RtcLogger::error("tm.tm_min = {}", tm.tm_min);
-    RtcLogger::error("tm.tm_sec = {}", tm.tm_sec);
-    RtcLogger::error("tm.tm_mday = {}", tm.tm_mday);
-    RtcLogger::error("tm.tm_mon = {}", tm.tm_mon);
-    RtcLogger::error("tm.tm_year = {}", tm.tm_year);
-    RtcLogger::error("tm.tm_wday = {}", tm.tm_wday);
-    RtcLogger::error("tm.tm_yday = {}", tm.tm_yday);
-    RtcLogger::error("tm.tm_isdst = {}", tm.tm_isdst);
-    RtcLogger::error("tm.tm_gmtoff = {}", tm.tm_gmtoff);
-    RtcLogger::error("tm.tm_zone = {}", tm.tm_zone);
+    auto isSame = [](const std::tm& a, const std::tm& b) {
+        if (a.tm_hour != b.tm_hour)
+            return false;
+        if (a.tm_min != b.tm_min)
+            return false;
+        if (a.tm_sec != b.tm_sec)
+            return false;
+        if (a.tm_mday != b.tm_mday)
+            return false;
+        if (a.tm_mon != b.tm_mon)
+            return false;
+        if (a.tm_year != b.tm_year)
+            return false;
+        if (a.tm_wday != b.tm_wday)
+            return false;
+        if (a.tm_yday != b.tm_yday)
+            return false;
+        if (a.tm_isdst != b.tm_isdst)
+            return false;
 
-    RtcLogger::error("converted.tm_hour = {}", converted.tm_hour);
-    RtcLogger::error("converted.tm_min = {}", converted.tm_min);
-    RtcLogger::error("converted.tm_sec = {}", converted.tm_sec);
-    RtcLogger::error("converted.tm_mday = {}", converted.tm_mday);
-    RtcLogger::error("converted.tm_mon = {}", converted.tm_mon);
-    RtcLogger::error("converted.tm_year = {}", converted.tm_year);
-    RtcLogger::error("converted.tm_wday = {}", converted.tm_wday);
-    RtcLogger::error("converted.tm_yday = {}", converted.tm_yday);
-    RtcLogger::error("converted.tm_isdst = {}", converted.tm_isdst);
-    RtcLogger::error("converted.tm_gmtoff = {}", converted.tm_gmtoff);
-    RtcLogger::error("converted.tm_zone = {}", converted.tm_zone);
+        return true;
+    };
 
-    return (std::memcmp(&tm, &converted, sizeof(std::tm)) == 0);
+    return isSame(tm, converted);
 }
 
 IRtc::IRtc()
