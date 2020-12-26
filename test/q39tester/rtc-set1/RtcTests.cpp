@@ -205,3 +205,58 @@ TEST_CASE("3. Set RTC with std::time_t and get with std::tm", "[unit][rtc]")
 
     hal::returnDevice(rtc);
 }
+
+TEST_CASE("4. Set & get RTC with std::time_t", "[unit][rtc]")
+{
+    hal::ScopedHardware hardware;
+
+    auto rtc = hal::getDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
+    std::tm tmSet{};
+
+    SECTION("4.1. 23:59:59 28.02.2019")
+    {
+        tmSet.tm_hour = 23;  // NOLINT
+        tmSet.tm_min = 59;   // NOLINT
+        tmSet.tm_sec = 59;   // NOLINT
+        tmSet.tm_mday = 28;  // NOLINT
+        tmSet.tm_mon = 1;    // NOLINT
+        tmSet.tm_year = 119; // NOLINT
+    }
+
+    SECTION("4.2. 23:59:59 31.12.2020")
+    {
+        tmSet.tm_hour = 23;  // NOLINT
+        tmSet.tm_min = 59;   // NOLINT
+        tmSet.tm_sec = 59;   // NOLINT
+        tmSet.tm_mday = 31;  // NOLINT
+        tmSet.tm_mon = 11;    // NOLINT
+        tmSet.tm_year = 120; // NOLINT
+    }
+
+    SECTION("4.3. 23:59:59 30.06.2000")
+    {
+        tmSet.tm_hour = 23;  // NOLINT
+        tmSet.tm_min = 59;   // NOLINT
+        tmSet.tm_sec = 59;   // NOLINT
+        tmSet.tm_mday = 30;  // NOLINT
+        tmSet.tm_mon = 5;    // NOLINT
+        tmSet.tm_year = 100; // NOLINT
+    }
+
+    auto timeSet = std::mktime(&tmSet);
+    auto error = rtc->setTime(timeSet);
+    REQUIRE(!error);
+
+    bool initialized = rtc->isInitialized();
+    REQUIRE(initialized);
+
+    std::time_t timeGet{};
+    error = rtc->getTime(timeGet);
+    REQUIRE(!error);
+
+    constexpr int cAllowedDiffSec = 3;
+    REQUIRE(timeGet >= timeSet);
+    REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
+
+    hal::returnDevice(rtc);
+}
