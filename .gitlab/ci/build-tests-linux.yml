@@ -43,187 +43,187 @@
   variables:
     Toolchain: "gcc-10"
 
-EepromSet1_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "q39tester/eeprom-set1"
-    BuildType: "Debug"
-
-EepromSet1_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "q39tester/eeprom-set1"
-    BuildType: "Release"
-
-EepromSet1_Linux_ARM_GCC_Debug_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  variables:
-    App: "q39tester/eeprom-set1"
-    BuildType: "Debug"
-
-EepromSet1_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "q39tester/eeprom-set1"
-    BuildType: "Release"
-
-GpioSet1_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "q39tester/gpio-set1"
-    BuildType: "Debug"
-
-GpioSet1_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "q39tester/gpio-set1"
-    BuildType: "Release"
-
-GpioSet1_Linux_ARM_GCC_Debug_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  variables:
-    App: "q39tester/gpio-set1"
-    BuildType: "Debug"
-
-GpioSet1_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "q39tester/gpio-set1"
-    BuildType: "Release"
-
-Middleware_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "middleware"
-    BuildType: "Debug"
-
-Middleware_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "middleware"
-    BuildType: "Release"
-
-Middleware_Linux_ARM_GCC_Debug_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  variables:
-    App: "middleware"
-    BuildType: "Debug"
-
-Middleware_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "middleware"
-    BuildType: "Release"
-
-Middleware_Linux_Clang_Debug_Build:
-  extends: .Build_Test_Linux_Clang
-  variables:
-    App: "middleware"
-    BuildType: "Debug"
-
-Middleware_Linux_Clang_Release_Build:
-  extends: .Build_Test_Linux_Clang
-  only:
-    - master
-  variables:
-    App: "middleware"
-    BuildType: "Release"
-
-Middleware_Linux_GCC_Debug_Build:
-  extends: .Build_Test_Linux_GCC
-  variables:
-    App: "middleware"
-    BuildType: "Debug"
-
-Middleware_Linux_GCC_Release_Build:
-  extends: .Build_Test_Linux_GCC
-  only:
-    - master
-  variables:
-    App: "middleware"
-    BuildType: "Release"
-
-PlatformGpio_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "platform-gpio"
-    BuildType: "Debug"
-
-PlatformGpio_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "platform-gpio"
-    BuildType: "Release"
-
-PlatformGpio_Linux_ARM_GCC_Debug_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  variables:
-    App: "platform-gpio"
-    BuildType: "Debug"
-
-PlatformGpio_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "platform-gpio"
-    BuildType: "Release"
-
-PlatformUart_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "platform-uart"
-    BuildType: "Debug"
-
-PlatformUart_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "platform-uart"
-    BuildType: "Release"
-
-PlatformUart_Linux_ARM_GCC_Debug_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  variables:
-    App: "platform-uart"
-    BuildType: "Debug"
-
-PlatformUart_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "platform-uart"
-    BuildType: "Release"
-
-RtcSet1_Linux_ARM_Clang_Debug_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  variables:
-    App: "q39tester/rtc-set1"
-    BuildType: "Debug"
-
-RtcSet1_Linux_ARM_Clang_Release_Build:
-  extends: .Build_Test_Linux_ARM_Clang
-  only:
-    - master
-  variables:
-    App: "q39tester/rtc-set1"
-    BuildType: "Release"
+#EepromSet1_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "q39tester/eeprom-set1"
+#    BuildType: "Debug"
+#
+#EepromSet1_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/eeprom-set1"
+#    BuildType: "Release"
+#
+#EepromSet1_Linux_ARM_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  variables:
+#    App: "q39tester/eeprom-set1"
+#    BuildType: "Debug"
+#
+#EepromSet1_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/eeprom-set1"
+#    BuildType: "Release"
+#
+#GpioSet1_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "q39tester/gpio-set1"
+#    BuildType: "Debug"
+#
+#GpioSet1_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/gpio-set1"
+#    BuildType: "Release"
+#
+#GpioSet1_Linux_ARM_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  variables:
+#    App: "q39tester/gpio-set1"
+#    BuildType: "Debug"
+#
+#GpioSet1_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/gpio-set1"
+#    BuildType: "Release"
+#
+#Middleware_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "middleware"
+#    BuildType: "Debug"
+#
+#Middleware_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "middleware"
+#    BuildType: "Release"
+#
+#Middleware_Linux_ARM_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  variables:
+#    App: "middleware"
+#    BuildType: "Debug"
+#
+#Middleware_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "middleware"
+#    BuildType: "Release"
+#
+#Middleware_Linux_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_Clang
+#  variables:
+#    App: "middleware"
+#    BuildType: "Debug"
+#
+#Middleware_Linux_Clang_Release_Build:
+#  extends: .Build_Test_Linux_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "middleware"
+#    BuildType: "Release"
+#
+#Middleware_Linux_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_GCC
+#  variables:
+#    App: "middleware"
+#    BuildType: "Debug"
+#
+#Middleware_Linux_GCC_Release_Build:
+#  extends: .Build_Test_Linux_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "middleware"
+#    BuildType: "Release"
+#
+#PlatformGpio_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "platform-gpio"
+#    BuildType: "Debug"
+#
+#PlatformGpio_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "platform-gpio"
+#    BuildType: "Release"
+#
+#PlatformGpio_Linux_ARM_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  variables:
+#    App: "platform-gpio"
+#    BuildType: "Debug"
+#
+#PlatformGpio_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "platform-gpio"
+#    BuildType: "Release"
+#
+#PlatformUart_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "platform-uart"
+#    BuildType: "Debug"
+#
+#PlatformUart_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "platform-uart"
+#    BuildType: "Release"
+#
+#PlatformUart_Linux_ARM_GCC_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  variables:
+#    App: "platform-uart"
+#    BuildType: "Debug"
+#
+#PlatformUart_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "platform-uart"
+#    BuildType: "Release"
+#
+#RtcSet1_Linux_ARM_Clang_Debug_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  variables:
+#    App: "q39tester/rtc-set1"
+#    BuildType: "Debug"
+#
+#RtcSet1_Linux_ARM_Clang_Release_Build:
+#  extends: .Build_Test_Linux_ARM_Clang
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/rtc-set1"
+#    BuildType: "Release"
 
 RtcSet1_Linux_ARM_GCC_Debug_Build:
   extends: .Build_Test_Linux_ARM_GCC
@@ -231,10 +231,10 @@ RtcSet1_Linux_ARM_GCC_Debug_Build:
     App: "q39tester/rtc-set1"
     BuildType: "Debug"
 
-RtcSet1_Linux_ARM_GCC_Release_Build:
-  extends: .Build_Test_Linux_ARM_GCC
-  only:
-    - master
-  variables:
-    App: "q39tester/rtc-set1"
-    BuildType: "Release"
+#RtcSet1_Linux_ARM_GCC_Release_Build:
+#  extends: .Build_Test_Linux_ARM_GCC
+#  only:
+#    - master
+#  variables:
+#    App: "q39tester/rtc-set1"
+#    BuildType: "Release"
