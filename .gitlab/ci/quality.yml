@@ -74,7 +74,7 @@ PlatformUart_Linux_ARM_Clang_Tidy:
 RtcSet1_Linux_ARM_Clang_Tidy:
   extends: .Clang_Tidy_Linux_ARM
   variables:
-    App: "rtc-set1"
+    App: "q39tester/rtc-set1"
 
 Coverage_Total:
   stage: quality
