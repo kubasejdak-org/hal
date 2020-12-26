@@ -35,6 +35,8 @@
 #include "hal/Error.hpp"
 #include "hal/utils/logger.hpp"
 
+#include <cerrno>
+
 namespace hal::time {
 
 /// Checks if the given std::tm object is valid in terms of allowed field values.
@@ -49,12 +51,16 @@ static bool isValidTime(std::tm& tm)
 {
     std::tm toConvert = tm;
     auto time = std::mktime(&toConvert);
-    if (time == static_cast<std::time_t>(-1))
+    if (time == static_cast<std::time_t>(-1)) {
+        RtcLogger::error("Invalid std::tm value: std::mktime() returned err={}", strerror(errno));
         return false;
+    }
 
     std::tm converted{};
-    if (gmtime_r(&time, &converted) == nullptr)
+    if (gmtime_r(&time, &converted) == nullptr) {
+        RtcLogger::error("Invalid std::tm value: gmtime_r() returned err={}", strerror(errno));
         return false;
+    }
 
     tm.tm_wday = toConvert.tm_wday;
     tm.tm_yday = toConvert.tm_yday;
