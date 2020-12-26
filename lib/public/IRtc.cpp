@@ -75,6 +75,8 @@ static bool isValidTime(std::tm& tm)
     RtcLogger::error("tm.tm_wday = {}", tm.tm_wday);
     RtcLogger::error("tm.tm_yday = {}", tm.tm_yday);
     RtcLogger::error("tm.tm_isdst = {}", tm.tm_isdst);
+    RtcLogger::error("tm.tm_gmtoff = {}", tm.tm_gmtoff);
+    RtcLogger::error("tm.tm_zone = {}", tm.tm_zone);
 
     RtcLogger::error("converted.tm_hour = {}", converted.tm_hour);
     RtcLogger::error("converted.tm_min = {}", converted.tm_min);
@@ -85,6 +87,8 @@ static bool isValidTime(std::tm& tm)
     RtcLogger::error("converted.tm_wday = {}", converted.tm_wday);
     RtcLogger::error("converted.tm_yday = {}", converted.tm_yday);
     RtcLogger::error("converted.tm_isdst = {}", converted.tm_isdst);
+    RtcLogger::error("converted.tm_gmtoff = {}", converted.tm_gmtoff);
+    RtcLogger::error("converted.tm_zone = {}", converted.tm_zone);
 
     return (std::memcmp(&tm, &converted, sizeof(std::tm)) == 0);
 }
