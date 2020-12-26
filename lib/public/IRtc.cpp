@@ -33,6 +33,7 @@
 #include "hal/time/IRtc.hpp"
 
 #include "hal/Error.hpp"
+#include "hal/utils/logger.hpp"
 
 namespace hal::time {
 
@@ -91,10 +92,15 @@ std::error_code IRtc::getTime(std::time_t& time)
 std::error_code IRtc::setTime(const std::tm& tm)
 {
     std::tm toSet = tm;
-    if (!isValidTime(toSet))
+    if (!isValidTime(toSet)) {
+        RtcLogger::error("Failed to set time: invalid argument");
         return Error::eInvalidArgument;
+    }
 
     auto error = drvSetTime(toSet);
+    if (error)
+        RtcLogger::error("Failed to set time: drvSetTime() returned err={}", error.message());
+
     m_initialized = static_cast<bool>(!error);
     return error;
 }
