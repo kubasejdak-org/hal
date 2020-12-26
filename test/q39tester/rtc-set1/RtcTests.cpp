@@ -260,3 +260,34 @@ TEST_CASE("4. Set & get RTC with std::time_t", "[unit][rtc]")
 
     hal::returnDevice(rtc);
 }
+
+TEST_CASE("5. Invalid RTC arguments", "[unit][rtc]")
+{
+    hal::ScopedHardware hardware;
+
+    auto rtc = hal::getDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
+
+    SECTION("5.1. Invalid std::tm value")
+    {
+        std::tm tm{};
+        tm.tm_hour = -1; // NOLINT
+        tm.tm_min = -1;  // NOLINT
+        tm.tm_sec = -1;  // NOLINT
+        tm.tm_mday = -1; // NOLINT
+        tm.tm_mon = -1;  // NOLINT
+        tm.tm_year = -1; // NOLINT
+
+        auto error = rtc->setTime(tm);
+        REQUIRE(error == hal::Error::eInvalidArgument);
+    }
+
+    SECTION("5.2. Invalid std::time_t value")
+    {
+        std::time_t time = -1;
+
+        auto error = rtc->setTime(time);
+        REQUIRE(error == hal::Error::eInvalidArgument);
+    }
+
+    hal::returnDevice(rtc);
+}
