@@ -32,24 +32,49 @@
 
 #pragma once
 
-#include "hal/ScopedDevice.hpp"
-#include "product/factory.hpp"
+#include <algorithm>
+#include <memory>
+#include <type_traits>
 
 namespace hal {
 
-/// Returns scoped device handle associated with the given device id and given board id.
-/// @tparam DeviceType      Type of the device to be returned.
-/// @tparam BoardId         Type of the board id where demanded device is created.
-/// @param id               Identifier of the device to be returned.
-/// @return Scoped device handle casted to the given type T and associated with the given device id.
-/// @note If there is no such id registered in the board or handle has been retrieved maximal times, then nullptr
-///       will be returned.
-/// @note Caller has to use the correct T type in order to get the valid handle.
-/// @note Handle returned from this function will be automatically returned to HAL once last owner destroys its copy.
-template <typename DeviceType, typename BoardId>
-ScopedDevice<DeviceType> getScopedDevice(BoardId id)
-{
-    return ScopedDevice<DeviceType>(getDevice<DeviceType>(id));
-}
+class Device;
+
+template <typename T>
+class ScopedDevice {
+    static_assert(std::is_base_of_v<Device, T>, "ScopedDevice can hold only types derived from hal::Device");
+
+public:
+    /// Default constructor.
+    ScopedDevice() = default;
+
+    ScopedDevice(std::shared_ptr<T> device) // NOLINT
+        : m_device(std::move(device))
+    {}
+    ScopedDevice(const ScopedDevice&) = delete;
+    ScopedDevice(ScopedDevice&& other) noexcept = default;
+    ~ScopedDevice()
+    {
+        if (m_device) {
+            returnDevice(m_device);
+            m_device.reset();
+        }
+    }
+    ScopedDevice<T>& operator=(const ScopedDevice&) = delete;
+    ScopedDevice<T>& operator=(ScopedDevice&&) noexcept = default;
+
+    operator std::shared_ptr<T>() const { return m_device; }      // NOLINT
+    operator bool() const { return static_cast<bool>(m_device); } // NOLINT
+
+    auto operator->() const { return m_device; }
+    auto& operator*() const { return *m_device; }
+
+    void reset() { m_device.reset(); }
+    void swap(ScopedDevice<T>& other) { std::swap(other.m_device, m_device); }
+    T* get() const { return m_device.get(); }
+
+private:
+    std::shared_ptr<T> m_device;
+};
 
 } // namespace hal
