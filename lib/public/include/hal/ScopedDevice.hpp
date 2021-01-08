@@ -63,6 +63,7 @@ public:
     ScopedDevice<T>& operator=(const ScopedDevice&) = delete;
     ScopedDevice<T>& operator=(ScopedDevice&&) noexcept = default;
 
+    operator std::shared_ptr<Device>() const { return m_device; } // NOLINT
     operator std::shared_ptr<T>() const { return m_device; }      // NOLINT
     operator bool() const { return static_cast<bool>(m_device); } // NOLINT
 

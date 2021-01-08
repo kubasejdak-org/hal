@@ -79,8 +79,8 @@ TEST_CASE("Toggle values of single pins", "[unit][mcp23x17]")
                          hal::device_id::eMcp23s17PinInPB6,
                          hal::device_id::eMcp23s17PinInPB7};
 
-        std::vector<std::shared_ptr<hal::gpio::IPinOutput>> outputs;
-        std::vector<std::shared_ptr<hal::gpio::IPinInput>> inputs;
+        std::vector<hal::ScopedDevice<hal::gpio::IPinOutput>> outputs;
+        std::vector<hal::ScopedDevice<hal::gpio::IPinInput>> inputs;
 
         for (const auto& cId : outputIds)
             outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(cId));
@@ -125,11 +125,5 @@ TEST_CASE("Toggle values of single pins", "[unit][mcp23x17]")
                 }
             }
         }
-
-        for (auto& output : outputs)
-            hal::returnDevice(output);
-
-        for (auto& input : inputs)
-            hal::returnDevice(input);
     }
 }
