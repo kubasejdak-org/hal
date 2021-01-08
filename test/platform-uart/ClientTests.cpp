@@ -57,10 +57,7 @@ public:
 
     UartEndpoint(UartEndpoint&&) = delete;
 
-    virtual ~UartEndpoint()
-    {
-        m_uart->close();
-    }
+    virtual ~UartEndpoint() { m_uart->close(); }
 
     UartEndpoint& operator=(const UartEndpoint&) = delete;
 
