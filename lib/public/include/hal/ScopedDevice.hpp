@@ -72,7 +72,7 @@ public:
 
     void reset() { m_device.reset(); }
     void swap(ScopedDevice<T>& other) { std::swap(other.m_device, m_device); }
-    T* get() const { return m_device.get(); }
+    [[nodiscard]] T* get() const { return m_device.get(); }
 
 private:
     std::shared_ptr<T> m_device;

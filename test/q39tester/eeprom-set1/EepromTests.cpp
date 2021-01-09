@@ -81,11 +81,11 @@ TEST_CASE("2. Write whole first page of EEPROM", "[unit][eeprom]")
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
     std::uint32_t address{};
 
     SECTION("2.1. First quarter") { address = 0; }
@@ -115,11 +115,11 @@ TEST_CASE("3. Write whole last page of EEPROM", "[unit][eeprom]")
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
     std::uint32_t address{};
 
     SECTION("3.1. First quarter") { address = (std::numeric_limits<std::uint16_t>::max() + 1) - cPageSize; }
@@ -149,11 +149,11 @@ TEST_CASE("4. Write page at page intersection in EEPROM", "[unit][eeprom]")
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
     constexpr std::uint8_t cPattern1 = 1;
     constexpr std::uint8_t cPattern2 = 2;
     constexpr std::uint8_t cPattern3 = 3;
@@ -204,11 +204,11 @@ TEST_CASE("5. Write page at page intersection in EEPROM with device address chan
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
     constexpr std::uint8_t cPattern1 = 1;
     constexpr std::uint8_t cPattern2 = 2;
     constexpr std::uint8_t cPattern3 = 3;
@@ -257,12 +257,12 @@ TEST_CASE("6. Write whole page of EEPROM with device address change", "[unit][ee
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const std::uint32_t cSize = eeproms[0]->getSize();
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::uint32_t cSize = eeproms.begin()->get()->getSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
 
     for (const auto& eeprom : eeproms) {
         // Write whole page.
@@ -284,12 +284,12 @@ TEST_CASE("7. Write every second byte separately in EEPROM", "[unit][eeprom]")
 {
     hal::ScopedHardware hardware;
 
-    std::vector eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
-                           hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
+    auto eeproms = {hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom1),
+                    hal::getScopedDevice<hal::storage::IEeprom>(hal::device_id::eAt24Cm02Eeprom2)};
 
     constexpr auto cTimeout = 100ms;
-    const std::uint32_t cSize = eeproms[0]->getSize();
-    const size_t cPageSize = eeproms[0]->getPageSize();
+    const std::uint32_t cSize = eeproms.begin()->get()->getSize();
+    const std::size_t cPageSize = eeproms.begin()->get()->getPageSize();
     constexpr std::uint8_t cPattern = 6;
 
     const std::vector<std::uint8_t> cWriteBlock(cPageSize, cPattern);
