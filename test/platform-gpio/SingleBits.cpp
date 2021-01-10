@@ -42,26 +42,32 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
     hal::ScopedHardware hardware;
     REQUIRE(hardware.initialized());
 
+    auto outputIds = {hal::device_id::ePortAPin0,
+                      hal::device_id::ePortAPin1,
+                      hal::device_id::ePortAPin2,
+                      hal::device_id::ePortAPin3,
+                      hal::device_id::ePortAPin4,
+                      hal::device_id::ePortAPin5,
+                      hal::device_id::ePortAPin6,
+                      hal::device_id::ePortAPin7};
+
+    auto inputIds = {hal::device_id::ePortBPin0,
+                     hal::device_id::ePortBPin1,
+                     hal::device_id::ePortBPin2,
+                     hal::device_id::ePortBPin3,
+                     hal::device_id::ePortBPin4,
+                     hal::device_id::ePortBPin5,
+                     hal::device_id::ePortBPin6,
+                     hal::device_id::ePortBPin7};
+
     std::vector<hal::ScopedDevice<hal::gpio::IPinOutput>> outputs;
     std::vector<hal::ScopedDevice<hal::gpio::IPinInput>> inputs;
 
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin0));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin1));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin2));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin3));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin4));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin5));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin6));
-    outputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinOutput>(hal::device_id::PlatformGpioId::ePortAPin7));
+    for (const auto& cId : outputIds)
+        outputs.emplace_back(hal::getDevice<hal::gpio::IPinOutput>(cId));
 
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin0));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin1));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin2));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin3));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin4));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin5));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin6));
-    inputs.emplace_back(hal::getScopedDevice<hal::gpio::IPinInput>(hal::device_id::PlatformGpioId::ePortBPin7));
+    for (const auto& cId : inputIds)
+        inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(cId));
 
     SECTION("Multiple toggling")
     {

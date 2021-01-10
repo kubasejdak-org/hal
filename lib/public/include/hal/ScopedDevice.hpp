@@ -40,6 +40,11 @@ namespace hal {
 
 class Device;
 
+/// RAII wrapper for the Device handle returned from HAL, which automatically returns wrapped device to HAL upon
+/// destruction. It has special conversion operator to std::shared_ptr<T> to allow easy passing to other functions.
+/// @tparam T               Type of the wrapped device handle.
+/// @note The semantics of this type is close to std::unique_ptr. It is a move-only type.It is assumed, that user will
+///       never hold another copy of given handle in other places.
 template <typename T>
 class ScopedDevice {
     static_assert(std::is_base_of_v<Device, T>, "ScopedDevice can hold only types derived from hal::Device");
@@ -48,30 +53,66 @@ public:
     /// Default constructor.
     ScopedDevice() = default;
 
+    /// Constructor. Takes ownership of the given device handle in terms of its lifetime in user code.
+    /// @param device       Device handle to be managed by this wrapper.
     ScopedDevice(std::shared_ptr<T> device) // NOLINT
         : m_device(std::move(device))
     {}
+
+    /// Copy constructor.
+    /// @note This constructor is deleted, because ScopedDevice is not meant to be copy-constructed.
     ScopedDevice(const ScopedDevice&) = delete;
+
+    /// Move constructor
     ScopedDevice(ScopedDevice&& other) noexcept = default;
-    ~ScopedDevice()
+
+    /// Destructor. Automatically returns wrapped device handle back to HAL.
+    ~ScopedDevice() { reset(); }
+
+    /// Copy assignment operator.
+    /// @return Reference to self.
+    /// @note This operator is deleted, because ScopedDevice is not meant to be copy-assigned.
+    ScopedDevice<T>& operator=(const ScopedDevice&) = delete;
+
+    /// Move assignment operator.
+    /// @return Reference to self.
+    ScopedDevice<T>& operator=(ScopedDevice&&) noexcept = default;
+
+    /// Conversion operator to std::shared_ptr<Device>.
+    /// @return Copy of the underlying object in a form of std::shared_ptr<Device>.
+    operator std::shared_ptr<Device>() const { return m_device; } // NOLINT
+
+    /// Conversion operator to std::shared_ptr<T>.
+    /// @return Copy of the underlying object in a form of std::shared_ptr<T>.
+    operator std::shared_ptr<T>() const { return m_device; } // NOLINT
+
+    /// Conversion operator to bool.
+    /// @return Flag indicating if the underlying pointer is nullptr or not.
+    operator bool() const { return static_cast<bool>(m_device); } // NOLINT
+
+    /// Dereferences the underlying object.
+    /// @return Copy of the underlying object in a form of std::shared_ptr<T>.
+    auto operator->() const { return m_device; }
+
+    /// Dereferences the underlying object.
+    /// @return Reference to the underlying object.
+    auto& operator*() const { return *m_device; }
+
+    /// Returns wrapped device handle back to HAL and clears the underlying object.
+    void reset()
     {
         if (m_device) {
             returnDevice(m_device);
             m_device.reset();
         }
     }
-    ScopedDevice<T>& operator=(const ScopedDevice&) = delete;
-    ScopedDevice<T>& operator=(ScopedDevice&&) noexcept = default;
 
-    operator std::shared_ptr<Device>() const { return m_device; } // NOLINT
-    operator std::shared_ptr<T>() const { return m_device; }      // NOLINT
-    operator bool() const { return static_cast<bool>(m_device); } // NOLINT
-
-    auto operator->() const { return m_device; }
-    auto& operator*() const { return *m_device; }
-
-    void reset() { m_device.reset(); }
+    /// Swaps underlying object with the given ScopedDevice.
+    /// @param other        Object to swap with.
     void swap(ScopedDevice<T>& other) { std::swap(other.m_device, m_device); }
+
+    /// Returns the stored pointer of the underlying object.
+    /// @return Pointer stored in the underlying object.
     [[nodiscard]] T* get() const { return m_device.get(); }
 
 private:
