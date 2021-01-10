@@ -225,7 +225,7 @@ static void counterThreadFunc(bool& stop,
     }
 }
 
-TEST_CASE("Multithread ping-pong and counter setting", "[unit][mcp23x17]")
+TEST_CASE("3. Multithread ping-pong and counter setting", "[unit][mcp23x17]")
 {
     hal::ScopedHardware hardware;
 

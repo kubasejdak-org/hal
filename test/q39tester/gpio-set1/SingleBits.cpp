@@ -39,7 +39,7 @@
 
 #include <vector>
 
-TEST_CASE("Toggle values of single pins", "[unit][mcp23x17]")
+TEST_CASE("1. Toggle values of single pins", "[unit][mcp23x17]")
 {
     hal::ScopedHardware hardware;
 
@@ -88,7 +88,7 @@ TEST_CASE("Toggle values of single pins", "[unit][mcp23x17]")
         for (const auto& cId : inputIds)
             inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(cId));
 
-        SECTION("Multiple toggling")
+        SECTION("1.1. Multiple toggling")
         {
             bool setValue = true;
             constexpr int cTestIterations = 100;
@@ -109,7 +109,7 @@ TEST_CASE("Toggle values of single pins", "[unit][mcp23x17]")
             }
         }
 
-        SECTION("Set one pin to 1 and rest to 0, check all")
+        SECTION("1.2. Set one pin to 1 and rest to 0, check all")
         {
             for (std::size_t i = 0; i < outputs.size(); ++i) {
                 for (std::size_t j = 0; j < outputs.size(); ++j) {

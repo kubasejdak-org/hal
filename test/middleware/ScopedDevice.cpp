@@ -36,18 +36,18 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("1. Devices are automatically returned to HAL", "[unit][ScopedDevice]")
+TEST_CASE("3.1. Devices are automatically returned to HAL", "[unit][ScopedDevice]")
 {
     hal::ScopedHardware hardware;
 
     hal::ScopedDevice<hal::test::TestDevice> device1;
 
-    SECTION("1.1. ScopedDevice created from std::shared_ptr")
+    SECTION("3.1.1. ScopedDevice created from std::shared_ptr")
     {
         device1 = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
     }
 
-    SECTION("1.2. ScopedDevice created automatically")
+    SECTION("3.1.2. ScopedDevice created automatically")
     {
         device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
     }

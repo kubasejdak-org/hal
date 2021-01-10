@@ -40,7 +40,7 @@
 #include <cstdint>
 #include <vector>
 
-TEST_CASE("Set all combinations of pin patterns", "[unit][mcp23x17]")
+TEST_CASE("2. Set all combinations of pin patterns", "[unit][mcp23x17]")
 {
     hal::ScopedHardware hardware;
 

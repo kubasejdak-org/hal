@@ -288,17 +288,17 @@ private:
     std::string m_checksumReceiver;
 };
 
-TEST_CASE("Transfers with daemon server", "[unit][hal][uart]")
+TEST_CASE("1. Transfers with daemon server", "[unit][hal][uart]")
 {
     hal::ScopedHardware hardware;
 
-    SECTION("Synchronous transmission")
+    SECTION("1.1. Synchronous transmission")
     {
         SynchronousClient client;
         client.run();
     }
 
-    SECTION("Asynchronous transmission")
+    SECTION("1.2. Asynchronous transmission")
     {
         AsynchronousClient client;
         client.run();

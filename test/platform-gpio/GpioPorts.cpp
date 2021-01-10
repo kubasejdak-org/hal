@@ -39,7 +39,7 @@
 
 #include <cstdint>
 
-TEST_CASE("Set all combinations of bit patterns on 4bit ports", "[unit][gpio]")
+TEST_CASE("2. Set all combinations of bit patterns on 4bit ports", "[unit][gpio]")
 {
     hal::ScopedHardware hardware;
     REQUIRE(hardware.initialized());

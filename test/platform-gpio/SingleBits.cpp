@@ -37,7 +37,7 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("Toggle values of single pins", "[unit][gpio]")
+TEST_CASE("1. Toggle values of single pins", "[unit][gpio]")
 {
     hal::ScopedHardware hardware;
     REQUIRE(hardware.initialized());
@@ -69,7 +69,7 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
     for (const auto& cId : inputIds)
         inputs.emplace_back(hal::getDevice<hal::gpio::IPinInput>(cId));
 
-    SECTION("Multiple toggling")
+    SECTION("1.1. Multiple toggling")
     {
         bool setValue = true;
         constexpr int cTestIterations = 100;
@@ -90,7 +90,7 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         }
     }
 
-    SECTION("Set first and last bit outputs to low, check all")
+    SECTION("1.2. Set first and last bit outputs to low, check all")
     {
         // Set all outputs to high.
         for (auto& output : outputs) {
@@ -120,7 +120,7 @@ TEST_CASE("Toggle values of single pins", "[unit][gpio]")
         }
     }
 
-    SECTION("Toggle only one pin at a time")
+    SECTION("1.3. Toggle only one pin at a time")
     {
         for (std::size_t i = 0; i < outputs.size(); ++i) {
             for (std::size_t j = 0; j < outputs.size(); ++j) {
