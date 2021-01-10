@@ -115,7 +115,7 @@ private:
 
 protected:
     static constexpr auto m_cTimeout{5s};
-    hal::ScopedDevice<hal::uart::IUart> m_uart;
+    hal::ScopedDevice<hal::uart::IUart> m_uart; // NOLINT
 };
 
 class IUartClient : public UartEndpoint {
