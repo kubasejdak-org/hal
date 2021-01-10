@@ -4,7 +4,7 @@
 /// @author Kuba Sejdak
 /// @copyright BSD 2-Clause License
 ///
-/// Copyright (c) 2019-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
+/// Copyright (c) 2021-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms, with or without
@@ -34,34 +34,16 @@
 
 #include "hal/Device.hpp"
 
-#include <memory>
+namespace hal::test {
 
-namespace hal {
-namespace device_id {
-
-// clang-format off
-/// Represents identifiers of the devices provided by the middleware board.
-enum MiddlewareId {
-    eTestDeviceSingle1,
-    eTestDeviceSingle2,
-    eTestDeviceShared1,
-    eTestDeviceShared2
+/// Represent test device used only for testing purposes.
+class TestDevice final : public Device {
+public:
+    /// Constructor.
+    /// @param sharingPolicy        Sharing policy to be used for this test device.
+    explicit TestDevice(SharingPolicy sharingPolicy)
+        : Device(sharingPolicy)
+    {}
 };
-// clang-format on
 
-} // namespace device_id
-
-/// Returns device handle associated with the given device id from middleware board.
-/// @tparam T           Type of the device to be returned.
-/// @param id           Identifier of the device to be returned.
-/// @return Device handle casted to the given type T and associated with the given device id.
-/// @note If there is no such id registered in the board or handle has been retrieved maximal times, then nullptr
-///       will be returned.
-/// @note Caller has to use the correct T type in order to get the valid handle.
-template <typename T>
-std::shared_ptr<T> getDevice(device_id::MiddlewareId id)
-{
-    return std::dynamic_pointer_cast<T>(detail::getDeviceImpl<decltype(id)>(id));
-}
-
-} // namespace hal
+} // namespace hal::test
