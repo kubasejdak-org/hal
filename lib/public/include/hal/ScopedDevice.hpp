@@ -78,25 +78,13 @@ public:
     /// @return Reference to self.
     ScopedDevice<T>& operator=(ScopedDevice&&) noexcept = default;
 
-    /// Conversion operator to std::shared_ptr<Device>.
-    /// @return Copy of the underlying object in a form of std::shared_ptr<Device>.
-    operator std::shared_ptr<Device>() const { return m_device; } // NOLINT
-
-    /// Conversion operator to std::shared_ptr<T>.
-    /// @return Copy of the underlying object in a form of std::shared_ptr<T>.
-    operator std::shared_ptr<T>() const { return m_device; } // NOLINT
-
     /// Conversion operator to bool.
     /// @return Flag indicating if the underlying pointer is nullptr or not.
     operator bool() const { return static_cast<bool>(m_device); } // NOLINT
 
     /// Dereferences the underlying object.
     /// @return Copy of the underlying object in a form of std::shared_ptr<T>.
-    auto operator->() const { return m_device; }
-
-    /// Dereferences the underlying object.
-    /// @return Reference to the underlying object.
-    auto& operator*() const { return *m_device; }
+    auto& operator->() const { return m_device; }
 
     /// Returns wrapped device handle back to HAL and clears the underlying object.
     void reset()
@@ -107,13 +95,9 @@ public:
         }
     }
 
-    /// Swaps underlying object with the given ScopedDevice.
-    /// @param other        Object to swap with.
-    void swap(ScopedDevice<T>& other) { std::swap(other.m_device, m_device); }
-
-    /// Returns the stored pointer of the underlying object.
-    /// @return Pointer stored in the underlying object.
-    [[nodiscard]] T* get() const { return m_device.get(); }
+    /// Returns reference to the underlying object.
+    /// @return Reference to the underlying object.
+    auto& get() const { return m_device; }
 
 private:
     std::shared_ptr<T> m_device;

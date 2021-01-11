@@ -40,17 +40,79 @@ TEST_CASE("3.1. Devices are automatically returned to HAL", "[unit][ScopedDevice
 {
     hal::ScopedHardware hardware;
 
-    hal::ScopedDevice<hal::test::TestDevice> device1;
-
-    SECTION("3.1.1. ScopedDevice created from std::shared_ptr")
     {
-        device1 = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        hal::ScopedDevice<hal::test::TestDevice> device1;
+
+        SECTION("3.1.1. ScopedDevice created from std::shared_ptr")
+        {
+            device1 = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        }
+
+        SECTION("3.1.2. ScopedDevice created automatically")
+        {
+            device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        }
+
+        REQUIRE(device1);
+        REQUIRE(device1.get());
+
+        auto secondHandle = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        REQUIRE(!secondHandle);
+        REQUIRE(!secondHandle.get());
     }
 
-    SECTION("3.1.2. ScopedDevice created automatically")
+    auto thirdHandle = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+    REQUIRE(thirdHandle);
+
+    hal::returnDevice(thirdHandle);
+}
+
+TEST_CASE("3.2. ScopedDevices can be moved around", "[unit][ScopedDevice]")
+{
+    hal::ScopedHardware hardware;
+
+    SECTION("3.2.1. ScopedDevice created with a move constructor.")
     {
+        auto device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        REQUIRE(device1);
+
+        auto secondHandle = std::move(device1);
+        REQUIRE(secondHandle);
+        REQUIRE(!device1); // NOLINT
+    }
+
+    SECTION("3.2.2. ScopedDevice created with a move assignment operator.")
+    {
+        hal::ScopedDevice<hal::test::TestDevice> device1;
         device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+        REQUIRE(device1);
     }
+}
 
+TEST_CASE("3.3. ScopedDevice can call functions of the underlying objects", "[unit][ScopedDevice]")
+{
+    hal::ScopedHardware hardware;
+
+    auto device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
     REQUIRE(device1);
+
+    device1->testFunc();
+}
+
+TEST_CASE("3.4. ScopedDevice can be explicitly cleared", "[unit][ScopedDevice]")
+{
+    hal::ScopedHardware hardware;
+
+    auto device1 = hal::getScopedDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+    REQUIRE(device1);
+    REQUIRE(device1.get());
+
+    device1.reset();
+    REQUIRE(!device1);
+    REQUIRE(!device1.get());
+
+    auto secondHandle = hal::getDevice<hal::test::TestDevice>(hal::device_id::eTestDeviceSingle1);
+    REQUIRE(secondHandle);
+
+    hal::returnDevice(secondHandle);
 }

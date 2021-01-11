@@ -44,6 +44,9 @@ public:
     explicit TestDevice(SharingPolicy sharingPolicy)
         : Device(sharingPolicy)
     {}
+
+    /// Empty test function.
+    void testFunc() const {}
 };
 
 } // namespace hal::test
