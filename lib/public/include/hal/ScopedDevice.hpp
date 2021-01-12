@@ -97,7 +97,7 @@ public:
 
     /// Returns reference to the underlying object.
     /// @return Reference to the underlying object.
-    auto& get() const { return m_device; }
+    [[nodiscard]] auto& get() const { return m_device; }
 
 private:
     std::shared_ptr<T> m_device;
