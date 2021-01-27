@@ -34,7 +34,7 @@
 
 #include "hal/gpio/types.hpp"
 
-#include <utils/property.hpp>
+#include <utils/types/property.hpp>
 
 #include <tuple>
 

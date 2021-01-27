@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include <utils/property.hpp>
+#include <utils/types/property.hpp>
 
 ADD_PROPERTY_2(RaspberryPi, GpioA, "gpio0");
 

@@ -36,7 +36,7 @@
 #include "hal/i2c/ScopedI2c.hpp"
 #include "hal/utils/logger.hpp"
 
-#include <utils/bits.hpp>
+#include <utils/bits/numerics.hpp.>
 
 #include <cassert>
 #include <limits>
@@ -68,7 +68,7 @@ GenericEeprom::GenericEeprom(std::shared_ptr<i2c::II2c> i2c,
     , m_address(address)
     , m_writeDelay(writeDelay, true)
 {
-    m_initialized = utils::isPowerOf2(pageSize) && i2c::verifyAddress(addressingMode, m_address);
+    m_initialized = utils::bits::isPowerOf2(pageSize) && i2c::verifyAddress(addressingMode, m_address);
     if (!m_initialized) {
         GenericEepromLogger::critical("Failed to create generic EEPROM: bad parameters");
         assert(false);
