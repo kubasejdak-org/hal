@@ -47,7 +47,7 @@ ADD_PROPERTY_2(RaspberryPi, M41T82, "i2c1");
 
 namespace hal::config {
 
-using MainBoardType = utils::PropertyType<MainBoard>;
+using MainBoardType = utils::types::PropertyType<MainBoard>;
 constexpr auto cQ39TesterSet1Mcp23S17 = utils::types::cPropertyValue<MainBoardType, Mcp23S17>;
 constexpr auto cQ39TesterSet1Mcp23017 = utils::types::cPropertyValue<MainBoardType, Mcp23017>;
 constexpr auto cQ39TesterSet1GenericEeprom = utils::types::cPropertyValue<MainBoardType, GenericEeprom>;
