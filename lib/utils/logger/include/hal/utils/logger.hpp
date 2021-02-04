@@ -56,6 +56,12 @@ REGISTER_LOGGER(I2cLogger, "I2C", cDefaultLogLevel);
 
 } // namespace i2c
 
+namespace sensor {
+
+REGISTER_LOGGER(Sht3xLogger, "SHT3x-DIS", cDefaultLogLevel);
+
+} // namespace sensor
+
 namespace spi {
 
 REGISTER_LOGGER(SpiLogger, "SPI", cDefaultLogLevel);
