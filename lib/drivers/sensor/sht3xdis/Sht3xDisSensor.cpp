@@ -87,7 +87,7 @@ Sht3xDisSensor::Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
     Sht3xLogger::info("Created SHT3x-DIS sensor with the following parameters:");
     Sht3xLogger::info("  addressingMode     : {}", (addressingMode == i2c::AddressingMode::e7bit) ? "7-bit" : "10-bit");
     Sht3xLogger::info("  address            : {:#x}", address);
-    Sht3xLogger::info("  refreshThresholdMs : {}", refreshThreshold);
+    Sht3xLogger::info("  refreshThreshold   : {}", refreshThreshold.count());
 }
 
 Sht3xDisSensor::~Sht3xDisSensor()
