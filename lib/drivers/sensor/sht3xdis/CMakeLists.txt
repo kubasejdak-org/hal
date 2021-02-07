@@ -10,5 +10,5 @@ target_include_directories(sensor-sht3xdis
 
 target_link_libraries(sensor-sht3xdis
     PUBLIC hal-public hal-private osal::cpp
-#    PRIVATE hal_utils_logger
+    PRIVATE hal-logger
 )

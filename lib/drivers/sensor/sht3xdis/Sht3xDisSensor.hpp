@@ -88,27 +88,18 @@ public:
     /// @note This operator is deleted, because Sht3xDisSensor is not meant to be move-assigned.
     Sht3xDisSensor& operator=(Sht3xDisSensor&&) noexcept = delete;
 
-    /**
-     * Returns the converted measurements of this instance of the SHT3x sensor.
-     * @param measurement           Output variable where the measurement will be stored.
-     * @return Error code of the operation.
-     * @retval eOk                  Measurement was successfully obtained.
-     * @retval eNoMem               There is no memory left to allocate space for the data.
-     * @retval eError               Driver is not properly initialized.
-     * @retval eNotOpened           Device is not opened.
-     * @retval eWrongState          Bus is not locked.
-     * @retval eTimeout             Timeout occurred before the operation was finished.
-     */
+    /// Returns the converted measurements of this instance of the SHT3x sensor.
+    /// @param measurement          Output variable where the measurement will be stored.
+    /// @return Error code of the operation.
     std::error_code getMeasurement(Sht3xMeasurement& measurement);
 
 private:
     std::shared_ptr<i2c::II2c> m_i2c;
     i2c::AddressingMode m_addressingMode;
     std::uint16_t m_address;
-    std::chrono::milliseconds m_refreshThreshold;
     Sht3xMeasurement m_measurement{};
     osal::Mutex m_mutex;
-    std::uint32_t m_lastReadTimestampUs{};
+    osal::Timeout m_cacheTimeout;
 };
 
 } // namespace hal::sensor

@@ -35,6 +35,7 @@
 #include "hal/i2c/ScopedI2c.hpp"
 #include "hal/utils/logger.hpp"
 
+#include <osal/ScopedLock.hpp>
 #include <osal/sleep.hpp>
 
 #include <cassert>
@@ -42,12 +43,6 @@
 #include <utility>
 
 namespace hal::sensor {
-
-/// Default timeout for SHT3x read operation.
-constexpr std::uint32_t cSht3xReadTimeoutMs = 15;
-
-/// SHT3x command for single shot read with clock stretching disabled and high repeatability.
-constexpr std::uint16_t cSht3CmdReadCsd = 0x0024;
 
 /// Converts raw temperature measurement to the physical temperature in Celsius degrees.
 /// @param rawTemperature       Raw temperature to be converted.
@@ -72,7 +67,7 @@ Sht3xDisSensor::Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
     : m_i2c(std::move(i2c))
     , m_addressingMode(addressingMode)
     , m_address(address)
-    , m_refreshThreshold(refreshThreshold)
+    , m_cacheTimeout(refreshThreshold, true)
 {
     if (!i2c::verifyAddress(m_addressingMode, m_address)) {
         Sht3xLogger::critical("Failed to create SHT3x sensor: bad parameters");
@@ -92,7 +87,7 @@ Sht3xDisSensor::Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
     Sht3xLogger::info("Created SHT3x-DIS sensor with the following parameters:");
     Sht3xLogger::info("  addressingMode     : {}", (addressingMode == i2c::AddressingMode::e7bit) ? "7-bit" : "10-bit");
     Sht3xLogger::info("  address            : {:#x}", address);
-    Sht3xLogger::info("  refreshThresholdMs : {}", m_refreshThreshold);
+    Sht3xLogger::info("  refreshThresholdMs : {}", refreshThreshold);
 }
 
 Sht3xDisSensor::~Sht3xDisSensor()
@@ -108,70 +103,46 @@ Sht3xDisSensor::~Sht3xDisSensor()
 
 std::error_code Sht3xDisSensor::getMeasurement(Sht3xMeasurement& measurement)
 {
-    if (measurement == nullptr) {
-        Sht3xLogger::error("Failed to get measurement: measurement=nullptr");
-        return err::eInvalidArgument;
-    }
+    measurement.temperature = 0.0F;
+    measurement.relativeHumidity = 0.0F;
 
-    measurement->temperature = 0.0F;
-    measurement->relativeHumidity = 0.0F;
+    osal::ScopedLock measurementLock(m_mutex);
 
-    trOsalMutexLock(&m_mutex);
-
-    if ((trOsalTimestampNowUs() - m_lastReadTimestampUs) <= m_refreshThresholdUs) {
+    if (!m_cacheTimeout.isExpired()) {
         Sht3xLogger::trace("Cache didn't expire, using old value");
-        *measurement = m_measurement;
-        trOsalMutexUnlock(&m_mutex);
-        return err::eOk;
+        measurement = m_measurement;
+        return Error::eOk;
     }
 
     i2c::ScopedI2c lock(m_i2c);
     if (!lock.isAcquired()) {
         Sht3xLogger::warn("Failed to get measurement: timeout when locking I2C bus (timeout=default)");
-        trOsalMutexUnlock(&m_mutex);
-        return err::eTimeout;
+        return Error::eTimeout;
     }
 
-    err result = m_i2c->write(m_address,
-                              reinterpret_cast<const std::uint8_t*>(&cSht3CmdReadCsd),
-                              sizeof(cSht3CmdReadCsd),
-                              true,
-                              cTimeoutInfinite);
-    if (result == err::eOk) {
-        const int cTrials = 2;
-        for (int i = 0; i < cTrials; ++i) {
-            trOsalSleepMs(cSht3xReadTimeoutMs);
-
-            std::array<std::uint8_t, 6> bytes{};
-            std::size_t actualReadSize;
-            result = m_i2c->read(m_address, bytes.data(), bytes.size(), cTimeoutInfinite, &actualReadSize);
-            if (result == err::eOk && actualReadSize == bytes.size()) {
-                std::uint16_t rawTemperature
-                    = ((static_cast<std::uint16_t>(bytes[0]) << 8) | static_cast<std::uint16_t>(bytes[1]));
-                std::uint16_t rawHumidity
-                    = ((static_cast<std::uint16_t>(bytes[3]) << 8) | static_cast<std::uint16_t>(bytes[4]));
-
-                m_measurement.temperature = rawTemperatureToPhysical(rawTemperature);
-                m_measurement.relativeHumidity = rawHumidityToPhysical(rawHumidity);
-                m_lastReadTimestampUs = trOsalTimestampNowUs();
-
-                *measurement = m_measurement;
-                break;
-            }
-
-            Sht3xLogger::error("Failed to get measurement: I2C read returned err={}, actualReadSize={}",
-                               toString(result),
-                               actualReadSize);
-        }
-    }
-    else {
-        Sht3xLogger::error("Failed to get measurement: I2C write returned err={}", toString(result));
+    // SHT3x command for single shot read with clock stretching disabled and high repeatability.
+    constexpr std::uint16_t cSht3CmdReadCsd = 0x0024;
+    if (auto error = m_i2c->write(m_address, {cSht3CmdReadCsd}, true, osal::Timeout::infinity())) {
+        Sht3xLogger::error("Failed to get measurement: I2C write returned err={}", error.message());
+        return error;
     }
 
-    lock.release();
-    trOsalMutexUnlock(&m_mutex);
+    BytesVector bytes;
+    constexpr int cReadSize = 6;
+    if (auto error = m_i2c->read(m_address, bytes, cReadSize, osal::Timeout::infinity())) {
+        Sht3xLogger::error("Failed to get measurement: I2C read returned err={}", error.message());
+        return error;
+    }
 
-    return result;
+    auto rawTemperature = ((std::uint16_t(bytes[0]) << 8U) | std::uint16_t(bytes[1])); // NOLINT
+    auto rawHumidity = ((std::uint16_t(bytes[3]) << 8U) | std::uint16_t(bytes[4]));    // NOLINT
+
+    m_measurement.temperature = rawTemperatureToPhysical(rawTemperature);
+    m_measurement.relativeHumidity = rawHumidityToPhysical(rawHumidity);
+    m_cacheTimeout.reset();
+
+    measurement = m_measurement;
+    return Error::eOk;
 }
 
 } // namespace hal::sensor

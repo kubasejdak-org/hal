@@ -1,33 +1,53 @@
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 ///
 /// @file
-/// @author Jakub Sejdak
-/// @copyright TRUMPF Huettinger
+/// @author Kuba Sejdak
+/// @copyright BSD 2-Clause License
 ///
-/// Copyright (c) 2019-2021, TRUMPF Huettinger
+/// Copyright (c) 2021-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
 /// All rights reserved.
 ///
-////////////////////////////////////////////////////////////////////////
+/// Redistribution and use in source and binary forms, with or without
+/// modification, are permitted provided that the following conditions are met:
+///
+/// 1. Redistributions of source code must retain the above copyright notice, this
+///    list of conditions and the following disclaimer.
+///
+/// 2. Redistributions in binary form must reproduce the above copyright notice,
+///    this list of conditions and the following disclaimer in the documentation
+///    and/or other materials provided with the distribution.
+///
+/// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+/// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+/// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+/// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+/// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+/// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+/// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+/// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+/// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+/// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+///
+/////////////////////////////////////////////////////////////////////////////////////
 
-#include "Sht3xDisHumidity.h"
+#include "Sht3xDisHumidity.hpp"
 
 #include <utility>
 
-namespace tr::hal::sensor {
+namespace hal::sensor {
 
 Sht3xDisHumidity::Sht3xDisHumidity(std::shared_ptr<Sht3xDisSensor> sensor)
     : m_sensor(std::move(sensor))
 {}
 
-err Sht3xDisHumidity::drvRead(float* relativeHumidity)
+std::error_code Sht3xDisHumidity::drvRead(float& relativeHumidity)
 {
     Sht3xMeasurement measurement{};
-    auto result = m_sensor->getMeasurement(&measurement);
-    if (result == err::eOk) {
-        *relativeHumidity = measurement.relativeHumidity;
-    }
+    auto error = m_sensor->getMeasurement(measurement);
+    if (!error)
+        relativeHumidity = measurement.relativeHumidity;
 
-    return result;
+    return error;
 }
 
-} // namespace tr::hal::sensor
+} // namespace hal::sensor
