@@ -4,7 +4,7 @@
 /// @author Kuba Sejdak
 /// @copyright BSD 2-Clause License
 ///
-/// Copyright (c) 2020-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
+/// Copyright (c) 2021-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms, with or without
@@ -30,29 +30,36 @@
 ///
 /////////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#define CATCH_CONFIG_RUNNER
+#define CATCH_CONFIG_DEFAULT_REPORTER "verbose" // NOLINT
 
-#include "hal/gpio/types.hpp"
+#include "VerboseReporter.hpp"
+#include "platformInit.hpp"
 
-#include <utils/types/property.hpp>
+#include <osal/init.hpp>
 
-#include <tuple>
+#include <catch2/catch.hpp>
 
-using SpiConfig = std::tuple<const char*, const char*, hal::gpio::Pin>;
+#include <cstdlib>
 
-ADD_PROPERTY_2(RaspberryPi, Mcp23S17, (SpiConfig{"spi0.0", "gpio-stub", hal::gpio::Pin::eBit0}));
-ADD_PROPERTY_2(RaspberryPi, Mcp23017, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, GenericEeprom, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, M41T82, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, SHT3xDIS, "i2c1");
+// NOLINTNEXTLINE
+int appMain(int argc, char* argv[])
+{
+    if (!platformInit())
+        return EXIT_FAILURE;
 
-namespace hal::config {
+    if (!osal::init())
+        return EXIT_FAILURE;
 
-using MainBoardType = utils::types::PropertyType<MainBoard>;
-constexpr auto cQ39TesterSet1Mcp23S17 = utils::types::cPropertyValue<MainBoardType, Mcp23S17>;
-constexpr auto cQ39TesterSet1Mcp23017 = utils::types::cPropertyValue<MainBoardType, Mcp23017>;
-constexpr auto cQ39TesterSet1GenericEeprom = utils::types::cPropertyValue<MainBoardType, GenericEeprom>;
-constexpr auto cQ39TesterSet1M41T82 = utils::types::cPropertyValue<MainBoardType, M41T82>;
-constexpr auto cQ39TesterSet1SHT3xDIS = utils::types::cPropertyValue<MainBoardType, SHT3xDIS>;
+#ifdef TEST_TAGS
+    (void) argc;
 
-} // namespace hal::config
+    std::array<char*, 2> argvTags{};
+    argvTags[0] = argv[0];
+    argvTags[1] = const_cast<char*>(TEST_TAGS);
+
+    return Catch::Session().run(argvTags.size(), argvTags.data());
+#else
+    return Catch::Session().run(argc, argv);
+#endif
+}

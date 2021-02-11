@@ -58,12 +58,10 @@ class Sht3xDisSensor {
 public:
     /// Constructor.
     /// @param i2c                  I2C driver associated with this SHT3x device.
-    /// @param addressingMode       Addressing mode of this SHT3x device.
     /// @param address              Address of this SHT3x device in the given addressing mode.
     /// @param refreshThresholdMs   Maximal time from the last read operation, that doesn't require refreshing
     ///                             the measurements.
     Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
-                   i2c::AddressingMode addressingMode,
                    std::uint16_t address,
                    std::chrono::milliseconds refreshThreshold = 100ms);
 
@@ -95,7 +93,6 @@ public:
 
 private:
     std::shared_ptr<i2c::II2c> m_i2c;
-    i2c::AddressingMode m_addressingMode;
     std::uint16_t m_address;
     Sht3xMeasurement m_measurement{};
     osal::Mutex m_mutex;

@@ -4,7 +4,7 @@
 /// @author Kuba Sejdak
 /// @copyright BSD 2-Clause License
 ///
-/// Copyright (c) 2020-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
+/// Copyright (c) 2021-2021, Kuba Sejdak <kuba.sejdak@gmail.com>
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms, with or without
@@ -30,29 +30,44 @@
 ///
 /////////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <hal/Error.hpp>
+#include <hal/Hardware.hpp>
+#include <hal/factory.hpp>
+#include <hal/sensor/IHumiditySensor.hpp>
+#include <hal/sensor/ITemperatureSensor.hpp>
 
-#include "hal/gpio/types.hpp"
+#include <catch2/catch.hpp>
 
-#include <utils/types/property.hpp>
+#include <cstdio>
 
-#include <tuple>
+TEST_CASE("1. Check if humidity values make sense", "[unit][sensor]")
+{
+    hal::ScopedHardware hardware;
 
-using SpiConfig = std::tuple<const char*, const char*, hal::gpio::Pin>;
+    auto humidity = hal::getScopedDevice<hal::sensor::IHumiditySensor>(hal::device_id::eSht3xDisHumidity);
 
-ADD_PROPERTY_2(RaspberryPi, Mcp23S17, (SpiConfig{"spi0.0", "gpio-stub", hal::gpio::Pin::eBit0}));
-ADD_PROPERTY_2(RaspberryPi, Mcp23017, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, GenericEeprom, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, M41T82, "i2c1");
-ADD_PROPERTY_2(RaspberryPi, SHT3xDIS, "i2c1");
+    float relativeHumidity{};
+    auto error = humidity->read(relativeHumidity);
+    REQUIRE(!error);
+    REQUIRE(humidity->minValue() >= 0.0F);
+    REQUIRE(humidity->maxValue() <= 100.0F);
+    REQUIRE(relativeHumidity >= humidity->minValue());
+    REQUIRE(relativeHumidity <= humidity->maxValue());
 
-namespace hal::config {
+    std::printf("Relative humidity: %f%%\n", relativeHumidity);
+}
 
-using MainBoardType = utils::types::PropertyType<MainBoard>;
-constexpr auto cQ39TesterSet1Mcp23S17 = utils::types::cPropertyValue<MainBoardType, Mcp23S17>;
-constexpr auto cQ39TesterSet1Mcp23017 = utils::types::cPropertyValue<MainBoardType, Mcp23017>;
-constexpr auto cQ39TesterSet1GenericEeprom = utils::types::cPropertyValue<MainBoardType, GenericEeprom>;
-constexpr auto cQ39TesterSet1M41T82 = utils::types::cPropertyValue<MainBoardType, M41T82>;
-constexpr auto cQ39TesterSet1SHT3xDIS = utils::types::cPropertyValue<MainBoardType, SHT3xDIS>;
+TEST_CASE("2. Check if temperature values make sense", "[unit][sensor]")
+{
+    hal::ScopedHardware hardware;
 
-} // namespace hal::config
+    auto temperature = hal::getScopedDevice<hal::sensor::ITemperatureSensor>(hal::device_id::eSht3xDisTemperature);
+
+    float temperatureValue{};
+    auto error = temperature->read(temperatureValue);
+    REQUIRE(!error);
+    REQUIRE(temperatureValue >= temperature->minValue());
+    REQUIRE(temperatureValue <= temperature->maxValue());
+
+    std::printf("Temperature: %f%%\n", temperatureValue);
+}

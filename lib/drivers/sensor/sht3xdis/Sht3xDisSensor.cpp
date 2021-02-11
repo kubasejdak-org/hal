@@ -61,15 +61,13 @@ static inline float rawHumidityToPhysical(std::uint16_t rawHumidity)
 }
 
 Sht3xDisSensor::Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
-                               i2c::AddressingMode addressingMode,
                                std::uint16_t address,
                                std::chrono::milliseconds refreshThreshold)
     : m_i2c(std::move(i2c))
-    , m_addressingMode(addressingMode)
     , m_address(address)
     , m_cacheTimeout(refreshThreshold, true)
 {
-    if (!i2c::verifyAddress(m_addressingMode, m_address)) {
+    if (!i2c::verifyAddress(i2c::AddressingMode::e7bit, m_address)) {
         Sht3xLogger::critical("Failed to create SHT3x sensor: bad parameters");
         assert(false);
         return;
@@ -85,7 +83,6 @@ Sht3xDisSensor::Sht3xDisSensor(std::shared_ptr<i2c::II2c> i2c,
     m_i2c->open();
 
     Sht3xLogger::info("Created SHT3x-DIS sensor with the following parameters:");
-    Sht3xLogger::info("  addressingMode     : {}", (addressingMode == i2c::AddressingMode::e7bit) ? "7-bit" : "10-bit");
     Sht3xLogger::info("  address            : {:#x}", address);
     Sht3xLogger::info("  refreshThreshold   : {}", refreshThreshold.count());
 }
