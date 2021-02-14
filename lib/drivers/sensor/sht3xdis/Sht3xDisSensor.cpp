@@ -118,7 +118,7 @@ std::error_code Sht3xDisSensor::getMeasurement(Sht3xMeasurement& measurement)
     }
 
     // SHT3x command for single shot read with clock stretching disabled and high repeatability.
-    constexpr std::uint16_t cSht3CmdReadCsd = 0x0024;
+    constexpr std::uint16_t cSht3CmdReadCsd = 0x2400;
     if (auto error = m_i2c->write(m_address, {cSht3CmdReadCsd}, true, osal::Timeout::infinity())) {
         Sht3xLogger::error("Failed to get measurement: I2C write returned err={}", error.message());
         return error;
