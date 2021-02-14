@@ -119,7 +119,7 @@ std::error_code Sht3xDisSensor::getMeasurement(Sht3xMeasurement& measurement)
 
     constexpr std::uint8_t cHighRepeatability = 0x00;
     constexpr std::uint8_t cClockStretchingDisabled = 0x24;
-    BytesVector readCmd = {cHighRepeatability, cClockStretchingDisabled};
+    auto readCmd = {cClockStretchingDisabled, cHighRepeatability};
     if (auto error = m_i2c->write(m_address, readCmd, true, osal::Timeout::infinity())) {
         Sht3xLogger::error("Failed to get measurement: I2C write returned err={}", error.message());
         return error;

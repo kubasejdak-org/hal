@@ -38,8 +38,6 @@
 
 #include <catch2/catch.hpp>
 
-#include <cstdio>
-
 TEST_CASE("1. Check if humidity values make sense", "[unit][sensor]")
 {
     hal::ScopedHardware hardware;
@@ -54,7 +52,11 @@ TEST_CASE("1. Check if humidity values make sense", "[unit][sensor]")
     REQUIRE(relativeHumidity >= humidity->minValue());
     REQUIRE(relativeHumidity <= humidity->maxValue());
 
-    std::printf("Relative humidity: %f%%\n", relativeHumidity);
+    // These values should be valid for tests performed in typical home environment.
+    constexpr auto cMinHumidity = 10.0F;
+    constexpr auto cMaxHumidity = 80.0F;
+    REQUIRE(relativeHumidity >= cMinHumidity);
+    REQUIRE(relativeHumidity <= cMaxHumidity);
 }
 
 TEST_CASE("2. Check if temperature values make sense", "[unit][sensor]")
@@ -69,5 +71,9 @@ TEST_CASE("2. Check if temperature values make sense", "[unit][sensor]")
     REQUIRE(temperatureValue >= temperature->minValue());
     REQUIRE(temperatureValue <= temperature->maxValue());
 
-    std::printf("Temperature: %f%%\n", temperatureValue);
+    // These values should be valid for tests performed in typical home environment.
+    constexpr auto cMinTemperature = 10.0F;
+    constexpr auto cMaxTemperature = 30.0F;
+    REQUIRE(temperatureValue >= cMinTemperature);
+    REQUIRE(temperatureValue <= cMaxTemperature);
 }
