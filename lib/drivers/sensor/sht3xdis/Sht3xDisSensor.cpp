@@ -117,17 +117,17 @@ std::error_code Sht3xDisSensor::getMeasurement(Sht3xMeasurement& measurement)
         return Error::eTimeout;
     }
 
-    constexpr std::uint8_t cHighRepeatability = 0x00;
-    constexpr std::uint8_t cClockStretchingDisabled = 0x24;
-    auto readCmd = {cClockStretchingDisabled, cHighRepeatability};
-    if (auto error = m_i2c->write(m_address, readCmd, true, osal::Timeout::infinity())) {
+    osal::Timeout timeout = 20ms;
+    constexpr std::uint8_t cHighRepeatability = 0x06;
+    constexpr std::uint8_t cClockStretchingEnabled = 0x2c;
+    if (auto error = m_i2c->write(m_address, {cClockStretchingEnabled, cHighRepeatability}, true, timeout)) {
         Sht3xLogger::error("Failed to get measurement: I2C write returned err={}", error.message());
         return error;
     }
 
     BytesVector bytes;
     constexpr int cReadSize = 6;
-    if (auto error = m_i2c->read(m_address, bytes, cReadSize, osal::Timeout::infinity())) {
+    if (auto error = m_i2c->read(m_address, bytes, cReadSize, timeout)) {
         Sht3xLogger::error("Failed to get measurement: I2C read returned err={}", error.message());
         return error;
     }
