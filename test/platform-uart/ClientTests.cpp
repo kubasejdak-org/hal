@@ -99,7 +99,8 @@ private:
             REQUIRE(!error);
 
             line += byte[0];
-        } while (byte[0] != '\n');
+        }
+        while (byte[0] != '\n');
 
         return line;
     }

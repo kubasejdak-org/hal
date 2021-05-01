@@ -206,7 +206,8 @@ LinuxUart::drvRead(std::uint8_t* bytes, std::size_t size, osal::Timeout timeout,
 
             toRead -= status;
         }
-    } while (toRead != 0 && !timeout.isExpired());
+    }
+    while (toRead != 0 && !timeout.isExpired());
 
     actualReadSize = size - toRead;
     if (timeout.isExpired() && toRead != 0) {
