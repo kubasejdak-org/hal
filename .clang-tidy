@@ -1,7 +1,7 @@
 ---
 Checks:                '*,
-                        -llvmlibc-*,
                         -*-vararg,
+                        -altera-struct-pack-align,
                         -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
                         -cppcoreguidelines-pro-bounds-constant-array-index,
                         -cppcoreguidelines-pro-bounds-pointer-arithmetic,
@@ -9,6 +9,7 @@ Checks:                '*,
                         -google-runtime-references,
                         -hicpp-no-array-decay,
                         -llvm-header-guard,
+                        -llvmlibc-*,
                         -modernize-use-trailing-return-type,
                         -readability-redundant-access-specifiers'
 WarningsAsErrors:      '*'
