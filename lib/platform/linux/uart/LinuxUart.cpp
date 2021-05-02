@@ -184,8 +184,8 @@ LinuxUart::drvRead(std::uint8_t* bytes, std::size_t size, osal::Timeout timeout,
         auto timeLeftSec = std::chrono::duration_cast<std::chrono::seconds>(timeLeft);
         auto timeLeftUSec = std::chrono::duration_cast<std::chrono::microseconds>(timeLeft - timeLeftSec);
         timeval tv{};
-        tv.tv_sec = timeLeftSec.count();
-        tv.tv_usec = timeLeftUSec.count();
+        tv.tv_sec = int(timeLeftSec.count());
+        tv.tv_usec = int(timeLeftUSec.count());
 
         return tv;
     };
