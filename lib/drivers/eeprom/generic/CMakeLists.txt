@@ -8,6 +8,6 @@ target_include_directories(hal-eeprom-generic
 )
 
 target_link_libraries(hal-eeprom-generic
-    PUBLIC hal-public hal-private osal::cpp
-    PRIVATE hal-logger utils::bits
+    PUBLIC hal::public hal::private osal::cpp
+    PRIVATE hal::logger utils::bits
 )
