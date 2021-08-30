@@ -11,7 +11,7 @@ stages:
   - deploy
 
 include:
-  - "/.gitlab/ci/build--linux.yml"
+  - "/.gitlab/ci/build-linux.yml"
   - "/.gitlab/ci/coverage-linux.yml"
   - "/.gitlab/ci/deploy.yml"
   - "/.gitlab/ci/quality.yml"
