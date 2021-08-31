@@ -5,5 +5,5 @@ target_include_directories(test-device
 )
 
 target_link_libraries(test-device
-    INTERFACE hal-public
+    INTERFACE hal::interfaces
 )
