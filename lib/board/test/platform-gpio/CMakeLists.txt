@@ -13,12 +13,12 @@ target_include_directories(test-platform-gpio-config
 )
 
 target_link_libraries(test-platform-gpio-public
-    INTERFACE hal::public
+    INTERFACE hal::interfaces
 )
 
 target_link_libraries(test-platform-gpio-private
-    PUBLIC test-platform-gpio-public hal::public
-    PRIVATE hal::private board::interface product-config
+    PUBLIC test-platform-gpio-public hal::interfaces
+    PRIVATE board::interface product-config
 )
 
 target_link_libraries(test-platform-gpio-config

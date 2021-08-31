@@ -13,12 +13,12 @@ target_include_directories(sbc-raspberrypi-config
 )
 
 target_link_libraries(sbc-raspberrypi-public
-    INTERFACE hal::public
+    INTERFACE hal::interfaces
 )
 
 target_link_libraries(sbc-raspberrypi-private
-    PUBLIC sbc-raspberrypi-public hal::public
-    PRIVATE hal::private board::interface hal::gpio hal::spi hal::i2c
+    PUBLIC sbc-raspberrypi-public hal::interfaces
+    PRIVATE board::interface hal::gpio hal::spi hal::i2c
 )
 
 target_link_libraries(sbc-raspberrypi-config

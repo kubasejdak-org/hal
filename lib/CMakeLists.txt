@@ -7,15 +7,14 @@ add_compile_options(-Wall -Wextra -Wpedantic -Werror $<$<COMPILE_LANGUAGE:CXX>:-
 add_subdirectory(product)
 add_subdirectory(board)
 add_subdirectory(drivers)
+add_subdirectory(interfaces/lib)
 add_subdirectory(platform)
-add_subdirectory(private)
-add_subdirectory(public)
 add_subdirectory(utils)
 
 add_library(hal INTERFACE)
 
 target_link_libraries(hal
-    INTERFACE product hal::public
+    INTERFACE hal::interfaces product
 )
 
 # Print HAL configuration.

@@ -20,7 +20,7 @@ target_include_directories(product-config
 
 target_link_libraries(product
     PUBLIC board-public
-    PRIVATE hal::public hal::private board::interface board-private
+    PRIVATE hal::interfaces board::interface board-private
 )
 
 target_link_libraries(product-config

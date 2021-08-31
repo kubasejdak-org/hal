@@ -30,12 +30,12 @@
 ///
 /////////////////////////////////////////////////////////////////////////////////////
 
-#include "LinuxGpio.hpp"
-#include "LinuxI2c.hpp"
-#include "LinuxSpi.hpp"
 #include "hal/Board.hpp"
 #include "hal/Error.hpp"
 #include "hal/gpio/GpioPortStub.hpp"
+#include "hal/gpio/LinuxGpio.hpp"
+#include "hal/i2c/LinuxI2c.hpp"
+#include "hal/spi/LinuxSpi.hpp"
 #include "sbc/raspberrypi/DeviceId.hpp"
 
 namespace hal {
