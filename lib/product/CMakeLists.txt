@@ -3,13 +3,15 @@ if (NOT DEFINED HAL_PRODUCT)
 endif ()
 
 add_library(product EXCLUDE_FROM_ALL
+    Hardware.cpp
+    returnDevice.cpp
     ${HAL_PRODUCT}/Hardware.cpp
 )
 
 add_library(product-config INTERFACE)
 
 target_include_directories(product
-    PUBLIC ${HAL_PRODUCT}/include
+    PUBLIC include ${HAL_PRODUCT}/include
 )
 
 target_include_directories(product-config
@@ -18,7 +20,7 @@ target_include_directories(product-config
 
 target_link_libraries(product
     PUBLIC board-public
-    PRIVATE hal-public hal-private board-private
+    PRIVATE hal::public hal::private board::interface board-private
 )
 
 target_link_libraries(product-config

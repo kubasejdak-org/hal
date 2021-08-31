@@ -18,7 +18,7 @@ target_link_libraries(sbc-raspberrypi-public
 
 target_link_libraries(sbc-raspberrypi-private
     PUBLIC sbc-raspberrypi-public hal::public
-    PRIVATE hal::private product-config hal::gpio hal::spi hal::i2c
+    PRIVATE hal::private board::interface hal::gpio hal::spi hal::i2c
 )
 
 target_link_libraries(sbc-raspberrypi-config

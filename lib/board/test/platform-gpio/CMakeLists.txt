@@ -18,7 +18,7 @@ target_link_libraries(test-platform-gpio-public
 
 target_link_libraries(test-platform-gpio-private
     PUBLIC test-platform-gpio-public hal::public
-    PRIVATE hal::private product-config
+    PRIVATE hal::private board::interface product-config
 )
 
 target_link_libraries(test-platform-gpio-config

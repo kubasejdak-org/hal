@@ -1,6 +1,12 @@
 add_library(board-public INTERFACE)
 add_library(board-private INTERFACE)
 add_library(board-config INTERFACE)
+add_library(board-interface INTERFACE)
+add_library(board::interface ALIAS board-interface)
+
+target_include_directories(board-interface
+    INTERFACE include
+)
 
 foreach (BOARD_PATH IN LISTS HAL_BOARDS)
     add_subdirectory(${BOARD_PATH})
