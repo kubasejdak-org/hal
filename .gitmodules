@@ -1,6 +1,6 @@
 [submodule "lib/interfaces"]
 	path = lib/interfaces
-	url = git@gitlab.com:embeddedlinux/libs/hal-interfaces.git
+	url = https://gitlab.com:embeddedlinux/libs/hal-interfaces.git
 [submodule "lib/platform/linux"]
 	path = lib/platform/linux
-	url = git@gitlab.com:embeddedlinux/libs/hal-linux.git
+	url = https://gitlab.com:embeddedlinux/libs/hal-linux.git
