@@ -18,6 +18,6 @@ target_link_libraries(test-uart-set1-public
 if (PLATFORM STREQUAL linux)
     target_link_libraries(test-uart-set1-private
         PUBLIC test-uart-set1-public hal::interfaces
-        PRIVATE board::interface hal::uart
+        PRIVATE hal::board-interface hal::uart
     )
 endif ()

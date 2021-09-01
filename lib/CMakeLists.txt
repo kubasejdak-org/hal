@@ -14,7 +14,7 @@ add_subdirectory(utils)
 add_library(hal INTERFACE)
 
 target_link_libraries(hal
-    INTERFACE hal::interfaces product
+    INTERFACE hal::interfaces hal::product
 )
 
 # Print HAL configuration.
