@@ -21,8 +21,8 @@ target_include_directories(hal-product-config
 )
 
 target_link_libraries(hal-product
-    PUBLIC hal::board-public
-    PRIVATE hal::interfaces hal::board-interface hal::board-private
+    PUBLIC hal::board
+    PRIVATE hal::interfaces hal::board-interface
 )
 
 target_link_libraries(hal-product-config
