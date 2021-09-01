@@ -4,7 +4,7 @@ add_library(hal-rtc-m41t82 EXCLUDE_FROM_ALL
 add_library(hal::rtc-m41t82 ALIAS hal-rtc-m41t82)
 
 target_include_directories(hal-rtc-m41t82
-    PUBLIC .
+    PUBLIC include
 )
 
 target_link_libraries(hal-rtc-m41t82
