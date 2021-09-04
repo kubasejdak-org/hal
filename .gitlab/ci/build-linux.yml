@@ -8,7 +8,6 @@
     paths:
       - ${CI_JOB_NAME}/bin
   before_script:
-    - pwd
     - |
       if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
           if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
@@ -21,11 +20,11 @@
           echo "Checking out ${PATH}: ${TRIGGER_SOURCE_COMMIT}"
           git checkout ${TRIGGER_SOURCE_COMMIT}
       fi
-    - pwd
   script:
+    - mkdir ${CI_JOB_NAME}
+    - cd ${CI_JOB_NAME}
+
     # Build application.
-    - pwd
-    - ls
     - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
     - make
 
