@@ -22,6 +22,8 @@
       fi
   script:
     # Build application.
+    - pwd
+    - ls
     - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
     - make
 
