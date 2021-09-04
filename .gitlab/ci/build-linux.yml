@@ -8,17 +8,19 @@
     paths:
       - ${CI_JOB_NAME}/bin
   before_script:
-    - echo "-- CI_PIPELINE_SOURCE '${CI_PIPELINE_SOURCE}'"
-    - echo "-- CI_PIPELINE_TRIGGERED '${CI_PIPELINE_TRIGGERED}'"
-    - echo "-- TRIGGER_SOURCE_PROJECT '${TRIGGER_SOURCE_PROJECT}'"
-    - echo "-- TRIGGER_SOURCE_BRANCH '${TRIGGER_SOURCE_BRANCH}'"
-  script:
-    - echo "CI_PIPELINE_SOURCE '${CI_PIPELINE_SOURCE}'"
-    - echo "CI_PIPELINE_TRIGGERED '${CI_PIPELINE_TRIGGERED}'"
-    - echo "TRIGGER_SOURCE_PROJECT '${TRIGGER_SOURCE_PROJECT}'"
-    - echo "TRIGGER_SOURCE_BRANCH '${TRIGGER_SOURCE_BRANCH}'"
-    - echo "Dupa".
+    - |
+      if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
+          if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
+              PATH="lib/interfaces"
+          elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-linux" ]; then
+              PATH="lib/platform/linux"
+          fi
 
+          cd ${PATH}
+          echo "Checking out ${PATH}: ${TRIGGER_SOURCE_COMMIT}"
+          git checkout ${TRIGGER_SOURCE_COMMIT}
+      fi
+  script:
     # Build application.
     - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
     - make
