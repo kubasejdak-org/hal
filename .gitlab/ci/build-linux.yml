@@ -16,6 +16,7 @@
               PATH="lib/platform/linux"
           fi
 
+          pwd
           cd ${PATH}
           echo "Checking out ${PATH}: ${TRIGGER_SOURCE_COMMIT}"
           git checkout ${TRIGGER_SOURCE_COMMIT}
