@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "IMcp23x17.hpp"
+#include "hal/gpio/IMcp23x17.hpp"
 #include "hal/i2c/II2c.hpp"
 
 #include <chrono>

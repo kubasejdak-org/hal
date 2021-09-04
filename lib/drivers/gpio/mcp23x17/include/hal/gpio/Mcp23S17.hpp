@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "IMcp23x17.hpp"
+#include "hal/gpio/IMcp23x17.hpp"
 #include "hal/gpio/IPinOutput.hpp"
 #include "hal/spi/ISpi.hpp"
 

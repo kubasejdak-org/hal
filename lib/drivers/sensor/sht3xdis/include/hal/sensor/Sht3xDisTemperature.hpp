@@ -32,8 +32,8 @@
 
 #pragma once
 
-#include "Sht3xDisSensor.hpp"
 #include "hal/sensor/ITemperatureSensor.hpp"
+#include "hal/sensor/Sht3xDisSensor.hpp"
 
 #include <memory>
 #include <system_error>

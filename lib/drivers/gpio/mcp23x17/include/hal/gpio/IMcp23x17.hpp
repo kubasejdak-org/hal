@@ -32,8 +32,8 @@
 
 #pragma once
 
-#include "Mcp23x17Common.hpp"
 #include "hal/gpio/IGpioRegister.hpp"
+#include "hal/gpio/Mcp23x17Common.hpp"
 
 #include <osal/Timeout.hpp>
 
