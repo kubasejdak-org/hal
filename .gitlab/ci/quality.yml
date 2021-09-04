@@ -2,7 +2,7 @@ Clang_Format:
   stage: quality
   image: kubasejdak/clang:12
   tags:
-    - linux
+    - cet_build
   needs: []
   script:
     - tools/check-clang-format.sh lib test
@@ -86,7 +86,7 @@ Coverage_Total:
     - master
   image: kubasejdak/gcc:latest
   tags:
-    - linux
+    - cet_build
   needs:
     - EepromSet1_Coverage
     - GpioSet1_Coverage
