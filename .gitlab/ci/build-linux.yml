@@ -8,15 +8,16 @@
     paths:
       - ${CI_JOB_NAME}/bin
   before_script:
+    - echo "-- CI_PIPELINE_SOURCE '${CI_PIPELINE_SOURCE}'"
+    - echo "-- CI_PIPELINE_TRIGGERED '${CI_PIPELINE_TRIGGERED}'"
     - echo "-- TRIGGER_SOURCE_PROJECT '${TRIGGER_SOURCE_PROJECT}'"
     - echo "-- TRIGGER_SOURCE_BRANCH '${TRIGGER_SOURCE_BRANCH}'"
   script:
+    - echo "CI_PIPELINE_SOURCE '${CI_PIPELINE_SOURCE}'"
+    - echo "CI_PIPELINE_TRIGGERED '${CI_PIPELINE_TRIGGERED}'"
     - echo "TRIGGER_SOURCE_PROJECT '${TRIGGER_SOURCE_PROJECT}'"
     - echo "TRIGGER_SOURCE_BRANCH '${TRIGGER_SOURCE_BRANCH}'"
     - echo "Dupa".
-
-    - mkdir ${CI_JOB_NAME}
-    - cd ${CI_JOB_NAME}
 
     # Build application.
     - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
