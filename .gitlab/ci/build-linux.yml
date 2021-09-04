@@ -18,6 +18,8 @@
 
           cd ${PATH}
           echo "Checking out ${PATH}: ${TRIGGER_SOURCE_COMMIT}"
+          apt update
+          apt install git
           git -h
       fi
   script:
