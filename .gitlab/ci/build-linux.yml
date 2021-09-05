@@ -21,7 +21,7 @@
 #
 #          cd ${PATH}
 #          echo "Checking out ${PATH} ${TRIGGER_SOURCE_COMMIT}"
-          git -h
+#          git -h
       fi
   script:
     - mkdir ${CI_JOB_NAME}
