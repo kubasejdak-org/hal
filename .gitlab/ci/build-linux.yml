@@ -10,11 +10,9 @@
   variables:
     GIT_DEPTH: 0
   before_script:
-    - git submodule update --remote --recursive
     - cd lib/platform/linux
     - git checkout master
     - git pull origin master
-    - git checkout maintenance/trigger-hal-ci
     - git checkout 65d8f157d19dc45d86508fb6cfe66f26a2124add
     - cd -
 #      - |
