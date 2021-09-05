@@ -8,22 +8,25 @@
     paths:
       - ${CI_JOB_NAME}/bin
   before_script:
-      - |
-        if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
-            if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
-                    SUBMODULE_PATH="lib/interfaces"
-                elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-boards" ]; then
-                    SUBMODULE_PATH="lib/boards"
-                elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-linux" ]; then
-                    SUBMODULE_PATH="lib/platform/linux"
-                fi
-
-                cd ${SUBMODULE_PATH}
-                echo "Checking out: ${SUBMODULE_PATH} ${TRIGGER_SOURCE_COMMIT}"
-                git checkout master
-                git pull
-                git checkout ${TRIGGER_SOURCE_COMMIT}
-            fi
+    - git submodule update --remote --recursive
+    - cd lib/platform/linux
+    - git checkout 65d8f157d19dc45d86508fb6cfe66f26a2124add
+#      - |
+#        if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
+#            if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
+#                    SUBMODULE_PATH="lib/interfaces"
+#                elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-boards" ]; then
+#                    SUBMODULE_PATH="lib/boards"
+#                elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-linux" ]; then
+#                    SUBMODULE_PATH="lib/platform/linux"
+#                fi
+#
+#                cd ${SUBMODULE_PATH}
+#                echo "Checking out: ${SUBMODULE_PATH} ${TRIGGER_SOURCE_COMMIT}"
+#                git checkout master
+#                git pull
+#                git checkout ${TRIGGER_SOURCE_COMMIT}
+#            fi
   script:
     - cd lib/platform/linux
     - git status
