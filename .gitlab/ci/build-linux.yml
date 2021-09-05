@@ -15,7 +15,7 @@
     - cd lib/platform/linux
     - export GIT_PAGER=cat
     - git checkout master
-    - git pull
+    - git pull origin master
     - git checkout maintenance/trigger-hal-ci
     - git log --oneline
     - git checkout 65d8f157d19dc45d86508fb6cfe66f26a2124add
