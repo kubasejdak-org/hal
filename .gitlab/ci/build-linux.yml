@@ -7,8 +7,6 @@
     expire_in: 2 weeks
     paths:
       - ${CI_JOB_NAME}/bin
-  variables:
-    GIT_DEPTH: 0
   before_script:
     - git submodule sync
     - git submodule update --remote --recursive
@@ -19,6 +17,7 @@
     - git checkout maintenance/trigger-hal-ci
     - git log --oneline
     - git checkout 65d8f157d19dc45d86508fb6cfe66f26a2124add
+    - cd -
 #      - |
 #        if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
 #            if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
