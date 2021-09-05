@@ -20,6 +20,7 @@
 
                 cd ${SUBMODULE_PATH}
                 echo "Checking out: ${SUBMODULE_PATH} ${TRIGGER_SOURCE_COMMIT}"
+                git fetch
                 git checkout ${TRIGGER_SOURCE_COMMIT}
             fi
   script:
