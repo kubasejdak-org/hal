@@ -8,7 +8,8 @@
     paths:
       - ${CI_JOB_NAME}/bin
   before_script:
-    - git -v
+    - |
+      git -v
 #    - |
 #      if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
 #          if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
