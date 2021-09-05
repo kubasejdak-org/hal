@@ -1,4 +1,5 @@
 Clang_Format:
+  extends: .Submodule_Checkout
   stage: quality
   image: kubasejdak/clang:12
   tags:
@@ -15,6 +16,7 @@ Clang_Format:
       fi
 
 .Clang_Tidy:
+  extends: .Submodule_Checkout
   stage: quality
   tags:
     - linux

@@ -1,4 +1,5 @@
 .Linux_Coverage:
+  extends: .Submodule_Checkout
   stage: coverage
   only:
     - master
