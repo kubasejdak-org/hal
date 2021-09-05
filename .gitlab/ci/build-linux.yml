@@ -9,9 +9,8 @@
       - ${CI_JOB_NAME}/bin
   before_script:
     - |
-      git -v
-#    - |
-#      if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
+      git -h
+      if [ "${CI_PIPELINE_SOURCE}" == "pipeline" ]; then
 #          if [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-interfaces" ]; then
 #              PATH="lib/interfaces"
 #          elif [ "${TRIGGER_SOURCE_PROJECT}" == "embeddedlinux/libs/hal-boards" ]; then
@@ -22,15 +21,15 @@
 #
 #          cd ${PATH}
 #          echo "Checking out ${PATH} ${TRIGGER_SOURCE_COMMIT}"
-#          git -h
-#      fi
+          git -h
+      fi
   script:
     - mkdir ${CI_JOB_NAME}
     - cd ${CI_JOB_NAME}
 
     # Build application.
-    - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
-    - make
+#    - cmake .. -DPLATFORM=linux -DTOOLCHAIN=${Toolchain} -DAPP=${App} -DCMAKE_BUILD_TYPE=${BuildType}
+#    - make
 
 .Build_Test_Linux_ARM_Clang:
   extends: .Build_Test_Linux
