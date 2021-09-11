@@ -6,4 +6,4 @@
 	url = https://gitlab.com/embeddedlinux/libs/hal-linux.git
 [submodule "lib/drivers"]
 	path = lib/drivers
-	url = https://gitlab.com:embeddedlinux/libs/hal-drivers.git
+	url = https://gitlab.com/embeddedlinux/libs/hal-drivers.git
