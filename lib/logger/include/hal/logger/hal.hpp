@@ -34,36 +34,12 @@
 
 #include <utils/logger/Logger.hpp>
 
+namespace hal {
+
 #ifdef NDEBUG
 constexpr auto cDefaultLogLevel = spdlog::level::off;
 #else
-constexpr auto cDefaultLogLevel = spdlog::level::err;
+    constexpr auto cDefaultLogLevel = spdlog::level::err;
 #endif
 
-namespace hal {
-namespace gpio {
-
-REGISTER_LOGGER(Mcp23x17Logger, "IMcp23x17", cDefaultLogLevel);
-REGISTER_LOGGER(Mcp23S17Logger, "Mcp23S17", cDefaultLogLevel);
-REGISTER_LOGGER(Mcp23017Logger, "Mcp23017", cDefaultLogLevel);
-
-} // namespace gpio
-
-namespace sensor {
-
-REGISTER_LOGGER(Sht3xLogger, "SHT3x-DIS", cDefaultLogLevel);
-
-} // namespace sensor
-
-namespace storage {
-
-REGISTER_LOGGER(GenericEepromLogger, "GenericEeprom", cDefaultLogLevel);
-
-} // namespace storage
-
-namespace time {
-
-REGISTER_LOGGER(M41T82Logger, "M41T82", cDefaultLogLevel);
-
-} // namespace time
 } // namespace hal

@@ -8,8 +8,8 @@ add_subdirectory(product)
 add_subdirectory(board)
 add_subdirectory(drivers/lib)
 add_subdirectory(interfaces/lib)
+add_subdirectory(logger)
 add_subdirectory(platform)
-add_subdirectory(utils)
 
 add_library(hal INTERFACE)
 
