@@ -39,7 +39,7 @@ namespace hal {
 #ifdef NDEBUG
 constexpr auto cDefaultLogLevel = spdlog::level::off;
 #else
-    constexpr auto cDefaultLogLevel = spdlog::level::err;
+constexpr auto cDefaultLogLevel = spdlog::level::err;
 #endif
 
 } // namespace hal
