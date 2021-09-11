@@ -6,7 +6,7 @@ add_compile_options(-Wall -Wextra -Wpedantic -Werror $<$<COMPILE_LANGUAGE:CXX>:-
 # Product has to be added first, because it configures the required boards and platform implementation.
 add_subdirectory(product)
 add_subdirectory(board)
-add_subdirectory(drivers)
+add_subdirectory(drivers/lib)
 add_subdirectory(interfaces/lib)
 add_subdirectory(platform)
 add_subdirectory(utils)
