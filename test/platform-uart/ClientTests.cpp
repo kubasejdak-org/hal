@@ -144,7 +144,9 @@ public:
 
     void sendClose()
     {
-        nlohmann::json request = {{"type", "close"}};
+        nlohmann::json request = {
+            {"type", "close"}
+        };
         auto response = sendRequest(request);
         REQUIRE(response["type"] == "ack");
     }
@@ -154,14 +156,19 @@ public:
 private:
     void sendPing()
     {
-        nlohmann::json request = {{"type", "ping"}};
+        nlohmann::json request = {
+            {"type", "ping"}
+        };
         auto response = sendRequest(request);
         REQUIRE(response["type"] == "pong");
     }
 
     void sendSettings(hal::uart::Baudrate baudrate)
     {
-        nlohmann::json request = {{"type", "settings"}, {"baudrate", int(baudrate)}};
+        nlohmann::json request = {
+            {    "type",    "settings"},
+            {"baudrate", int(baudrate)}
+        };
         auto response = sendRequest(request);
         REQUIRE(response["type"] == "ack");
 
@@ -195,7 +202,10 @@ private:
         constexpr std::size_t cMaxDataSize = 16 * 1024;
         auto size = generateRandomNumber<>(cMinDataSize, cMaxDataSize);
 
-        nlohmann::json request = {{"type", "data"}, {"size", size}};
+        nlohmann::json request = {
+            {"type", "data"},
+            {"size",   size}
+        };
         auto response = sendRequest(request);
         REQUIRE(response["type"] == "ack");
 
@@ -269,7 +279,10 @@ private:
         constexpr std::size_t cMaxDataSize = 16 * 1024;
         auto size = generateRandomNumber<>(cMinDataSize, cMaxDataSize);
 
-        nlohmann::json request = {{"type", "data"}, {"size", size}};
+        nlohmann::json request = {
+            {"type", "data"},
+            {"size",   size}
+        };
         auto response = sendRequest(request);
         REQUIRE(response["type"] == "ack");
 

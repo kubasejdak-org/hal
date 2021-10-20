@@ -39,6 +39,7 @@
 namespace hal {
 namespace device_id {
 
+// clang-format off
 /// Represents identifiers of the devices provided by the platform-gpio board.
 enum PlatformGpioId {
     // Port A.
@@ -65,6 +66,7 @@ enum PlatformGpioId {
     ePortBPinSet0,
     ePortBPinSet1
 };
+// clang-format on
 
 } // namespace device_id
 
