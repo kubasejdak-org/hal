@@ -39,7 +39,6 @@
 namespace hal {
 namespace device_id {
 
-// clang-format off
 /// Represents identifiers of the devices provided by the q39tester-set1 board.
 enum Q39TesterSet1Id {
     ////////////////////////////////////////////////////////////////////
@@ -138,7 +137,6 @@ enum Q39TesterSet1Id {
     eSht3xDisHumidity,
     eSht3xDisTemperature
 };
-// clang-format on
 
 } // namespace device_id
 
