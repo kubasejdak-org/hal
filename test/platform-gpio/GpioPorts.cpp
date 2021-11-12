@@ -65,12 +65,12 @@ TEST_CASE("2. Set all combinations of bit patterns on 4bit ports", "[unit][gpio]
 
         // Verify pattern.
         std::optional<std::uint8_t> getValue;
-        std::tie(getValue, error) = inputSet0->get();
+        std::tie(getValue, error) = inputSet0->get().toTuple();
         REQUIRE(!error);
         auto expectedValue = pattern & cPatternMask;
-        REQUIRE((getValue == expectedValue);
+        REQUIRE(getValue == expectedValue);
 
-        std::tie(getValue, error) = inputSet1->get();
+        std::tie(getValue, error) = inputSet1->get().toTuple();
         REQUIRE(!error);
         expectedValue = std::uint8_t(~pattern) & cPatternMask;
         REQUIRE(*getValue == expectedValue);

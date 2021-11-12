@@ -80,7 +80,7 @@ TEST_CASE("1. Toggle values of single pins", "[unit][gpio]")
             }
 
             for (auto& input : inputs) {
-                auto [getValue, error] = input->get(getValue);
+                auto [getValue, error] = input->get();
                 REQUIRE(!error);
                 REQUIRE(*getValue == setValue);
             }
@@ -99,7 +99,7 @@ TEST_CASE("1. Toggle values of single pins", "[unit][gpio]")
 
         // Verify initial setup.
         for (auto& input : inputs) {
-            auto [getValue, error] = input->get(getValue);
+            auto [getValue, error] = input->get();
             REQUIRE(!error);
             REQUIRE(*getValue);
         }
@@ -110,7 +110,7 @@ TEST_CASE("1. Toggle values of single pins", "[unit][gpio]")
 
         // Verify test setup.
         for (std::size_t i = 0; i < inputs.size(); ++i) {
-            auto [getValue, error] = inputs[i]->get(getValue);
+            auto [getValue, error] = inputs[i]->get();
             REQUIRE(!error);
             bool shouldBeLow = (i == 0 || i == (inputs.size() - 1));
             REQUIRE(*getValue == !shouldBeLow);
@@ -127,7 +127,7 @@ TEST_CASE("1. Toggle values of single pins", "[unit][gpio]")
             }
 
             for (std::size_t j = 0; j < outputs.size(); ++j) {
-                auto [getValue, error] = inputs[j]->get(getValue);
+                auto [getValue, error] = inputs[j]->get();
                 REQUIRE(!error);
 
                 bool expectedValue = (i == j);
