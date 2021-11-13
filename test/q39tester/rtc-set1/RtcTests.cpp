@@ -86,8 +86,7 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
     REQUIRE(!getError);
 
     auto timeSet = std::mktime(&tmSet);
-    auto tmGetValue = *tmGet;
-    auto timeGet = std::mktime(&tmGetValue);
+    auto timeGet = std::mktime(&tmGet.value());
     constexpr int cAllowedDiffSec = 3;
     REQUIRE(timeGet >= timeSet);
     REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
