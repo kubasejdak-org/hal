@@ -85,11 +85,12 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
     auto [tmGet, getError] = rtc->getTime();
     REQUIRE(!getError);
 
-    //auto timeSet = std::mktime(&tmSet);
-    //auto timeGet = std::mktime(&tmGet.value());
-    //constexpr int cAllowedDiffSec = 3;
-    //REQUIRE(timeGet >= timeSet);
-    //REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
+    auto timeSet = std::mktime(&tmSet);
+    auto tmGetValue = *tmGet;
+    auto timeGet = std::mktime(&tmGetValue);
+    constexpr int cAllowedDiffSec = 3;
+    REQUIRE(timeGet >= timeSet);
+    REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
 }
 
 TEST_CASE("2. Invalid RTC arguments", "[unit][rtc]")
