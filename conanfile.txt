@@ -2,6 +2,7 @@
 catch2/2.13.7
 fmt/8.0.1
 libgpiod/1.6.3
+nlohmann_json/3.10.4
 spdlog/1.9.2
 
 [generators]
