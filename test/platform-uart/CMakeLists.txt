@@ -19,7 +19,7 @@ target_compile_definitions(appplatform-uart
 
 target_link_libraries(appplatform-uart
     PUBLIC platform-init
-    PRIVATE osal::cpp hal nlohmann_json hash
+    PRIVATE osal::cpp hal hash
 )
 
 file(COPY ${CMAKE_CURRENT_LIST_DIR}/daemon DESTINATION ${CMAKE_BINARY_DIR}/bin)
