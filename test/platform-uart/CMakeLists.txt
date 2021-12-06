@@ -8,8 +8,6 @@ target_include_directories(appplatform-uart
     PRIVATE .
 )
 
-find_library(nlohmann_json NAMES nlohmann_json)
-
 add_subdirectory(${CMAKE_SOURCE_DIR}/external/hash ${CMAKE_BINARY_DIR}/external/hash)
 
 target_compile_definitions(appplatform-uart
