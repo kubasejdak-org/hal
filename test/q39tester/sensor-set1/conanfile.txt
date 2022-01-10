@@ -1,6 +1,7 @@
 [requires]
 catch2/2.13.8
 fmt/8.1.1
+libgpiod/1.6.3
 spdlog/1.9.2
 
 [generators]
