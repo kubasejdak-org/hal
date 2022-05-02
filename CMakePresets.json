@@ -61,14 +61,14 @@
       "name": "eeprom-set1",
       "hidden": true,
       "cacheVariables": {
-        "APP": "eeprom-set1"
+        "APP": "q39tester/eeprom-set1"
       }
     },
     {
       "name": "gpio-set1",
       "hidden": true,
       "cacheVariables": {
-        "APP": "gpio-set1"
+        "APP": "q39tester/gpio-set1"
       }
     },
     {
@@ -96,14 +96,14 @@
       "name": "rtc-set1",
       "hidden": true,
       "cacheVariables": {
-        "APP": "rtc-set1"
+        "APP": "q39tester/rtc-set1"
       }
     },
     {
       "name": "sensor-set1",
       "hidden": true,
       "cacheVariables": {
-        "APP": "sensor-set1"
+        "APP": "q39tester/sensor-set1"
       }
     },
     {
