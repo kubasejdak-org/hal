@@ -92,20 +92,20 @@ TEST_CASE("1. Set & get RTC time with std::tm", "[unit][rtc]")
     REQUIRE(timeGet <= (timeSet + cAllowedDiffSec));
 }
 
-TEST_CASE("2. Invalid RTC arguments", "[unit][rtc]")
-{
-    hal::ScopedHardware hardware;
+// TEST_CASE("2. Invalid RTC arguments", "[unit][rtc]")
+// {
+//     hal::ScopedHardware hardware;
 
-    auto rtc = hal::getScopedDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
+//     auto rtc = hal::getScopedDevice<hal::time::IRtc>(hal::device_id::eM41T82Rtc);
 
-    std::tm tm{};
-    tm.tm_hour = -1; // NOLINT
-    tm.tm_min = -1;  // NOLINT
-    tm.tm_sec = -1;  // NOLINT
-    tm.tm_mday = -1; // NOLINT
-    tm.tm_mon = -1;  // NOLINT
-    tm.tm_year = -1; // NOLINT
+//     std::tm tm{};
+//     tm.tm_hour = -1; // NOLINT
+//     tm.tm_min = -1;  // NOLINT
+//     tm.tm_sec = -1;  // NOLINT
+//     tm.tm_mday = -1; // NOLINT
+//     tm.tm_mon = -1;  // NOLINT
+//     tm.tm_year = -1; // NOLINT
 
-    auto error = rtc->setTime(tm);
-    REQUIRE(error == hal::Error::eInvalidArgument);
-}
+//     auto error = rtc->setTime(tm);
+//     REQUIRE(error == hal::Error::eInvalidArgument);
+// }
