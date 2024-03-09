@@ -107,5 +107,6 @@ TEST_CASE("2. Invalid RTC arguments", "[unit][rtc]")
     tm.tm_year = -1; // NOLINT
 
     auto error = rtc->setTime(tm);
+    (void) error;
     // REQUIRE(error == hal::Error::eInvalidArgument);
 }
