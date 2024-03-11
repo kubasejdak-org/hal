@@ -38,7 +38,8 @@ stages:
   - deploy
 
 cleanup:
-  extends: .Submodule_Checkout
+  variables:
+    GIT_STRATEGY: none
   tags:
     - docker-build
   needs: []
