@@ -1,4 +1,5 @@
 option(USE_CONAN "Automatically use conan to install required dependencies" OFF)
+set(CONAN_SYSTEM_INCLUDES ON)
 
 function(conan_init_wrapper)
     include(FetchContent)

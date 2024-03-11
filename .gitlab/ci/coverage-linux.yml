@@ -23,7 +23,7 @@
 
 .Linux_ARM_GCC_Coverage:
   extends: .Linux_Coverage
-  image: ${DOCKER_IMAGE_ARM_TESTS}
+  image: ${DOCKER_IMAGE_TESTS_SBC}
   tags:
     - raspberrypi
   variables:

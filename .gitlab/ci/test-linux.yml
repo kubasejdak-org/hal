@@ -15,7 +15,7 @@
 
 .Run_Test_Linux_ARM:
   extends: .Run_Test
-  image: ${DOCKER_IMAGE_ARM_TESTS}
+  image: ${DOCKER_IMAGE_TESTS_SBC}
   tags:
     - raspberrypi
 
