@@ -40,7 +40,7 @@ stages:
 cleanup:
   extends: .Submodule_Checkout
   tags:
-    - cet_build
+    - docker-build
   needs: []
   script:
     - df -h
